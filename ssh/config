@@ -4,3 +4,7 @@ Host *
   AddKeysToAgent yes
   UseKeychain yes
   IdentityFile ~/.ssh/id_rsa
+
+Host 172.105.176.133
+  HostName 172.105.176.133
+  User thomas
