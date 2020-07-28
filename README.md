@@ -20,6 +20,10 @@ So hit that fork button and get coding!
 xcode-select --install
 ```
 
+* Ensure you haven't installed any additional programs, e.g. Google Chrome.
+
+  This will interfere with the setup script and cause it to fail.
+
 ### Setup
 
 ```sh
@@ -29,6 +33,8 @@ cd ~/dotfiles
 ```
 
 ## Post-Install
+
+Once the script has completed successfully, quit `Terminal` and open `iTerm`
 
 ### Configure
 
@@ -42,6 +48,8 @@ cd ~/dotfiles
     * We don't need the suggested font, so decline installation
 * Git
   * Run the following, replacing values with your own:
+
+   It is recommended to use your GitHub-provided `noreply` address: [Setting your commit email address](https://help.github.com/en/github/setting-up-and-managing-your-github-user-account/setting-your-commit-email-address#setting-your-commit-email-address-on-github)
   ```sh
   git config --global user.name "Your Name"
   git config --global user.email "you@example.com"

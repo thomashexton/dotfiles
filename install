@@ -111,4 +111,7 @@ for p in nodejs ruby yarn; do
   fi
 done
 
+# Install default versions
+asdf install
+
 echo "Setup complete, quit terminal and open iTerm to continue..."
