@@ -20,7 +20,7 @@ alias gcpr="git checkout production"
 # Kubernetes
 alias rollback-site="kubectl rollout undo deployment/site -n site"
 alias rollback-graphql="kubectl rollout undo deployment/graphql -n site"
-alias kstage='asdf shell kubectl 1.15.11 && asp staging && aws eks update-kubeconfig --name=staging --alias=staging && kubectx staging'
+alias kstage='asdf shell kubectl 1.15.11 && asp staging && aws eks update-kubeconfig --name=eks-staging-v1 --alias=staging && kubectx staging'
 alias kprod='asdf shell kubectl 1.8.6 && asp production && kubectx production'
 
 # Rails

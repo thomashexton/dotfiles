@@ -52,6 +52,7 @@ function migrate() {
     dbmigrate;
   fi
 }
+
 function rollback() {
   local message="Test ENV too? "
   read "reply?$message"
