@@ -16,11 +16,12 @@ alias vim='nvim'
 
 # Git
 alias gcpr="git checkout production"
+alias gfd="git diff --name-status master.."
 
 # Kubernetes
 alias rollback-site="kubectl rollout undo deployment/site -n site"
 alias rollback-graphql="kubectl rollout undo deployment/graphql -n site"
-alias kstage='asdf shell kubectl 1.15.11 && asp staging && aws eks update-kubeconfig --name=eks-staging-v1 --alias=staging && kubectx staging'
+alias kstage='asdf shell kubectl 1.15.11 && asp staging && aws eks update-kubeconfig --name=staging-gitops-v1 --alias=staging && kubectx staging'
 alias kprod='asdf shell kubectl 1.8.6 && asp production && kubectx production'
 
 # Rails
@@ -47,9 +48,6 @@ alias womo="cd ~/Oneflare/womo"
 
 alias ic='cd ~/Library/Mobile\ Documents/com~apple~CloudDocs'
 
-# Displayplacer Setups
-# # Switch Res to 1080p
-alias hd1080='displayplacer "id:120F7F58-74F0-A671-FAC3-4A43FC492AC8 res:1920x1080 hz:60 color_depth:8 scaling:on origin:(0,0) degree:0" "id:8F203084-8EC4-5D28-9618-86A96CAA2871 res:1080x1920 hz:120 color_depth:8 scaling:off origin:(1920,-420) degree:270"'
-
-# # Switch Res to 1440p
-alias hd1440='displayplacer "id:120F7F58-74F0-A671-FAC3-4A43FC492AC8 res:2560x1440 hz:60 color_depth:8 scaling:on origin:(0,0) degree:0" "id:8F203084-8EC4-5D28-9618-86A96CAA2871 res:1080x1920 hz:120 color_depth:8 scaling:off origin:(1920,-240) degree:270"'
+# Postgres
+alias pg_start="launchctl load ~/Library/LaunchAgents"
+alias pg_stop="launchctl unload ~/Library/LaunchAgents"
