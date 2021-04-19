@@ -1,4 +1,4 @@
-# Kubernetes
+# Rails
 alias be="bundle exec"
 alias rick="bundle exec rails s webrick"
 alias rs="bundle exec rails s"
