@@ -92,3 +92,31 @@ cask "iterm2"
 cask "slack"
 cask "tableplus"
 cask "visual-studio-code"
+cask "steelseries-exactmouse-tool"
+
+# declare -a mas_apps=(
+#   "824183456"  # Affinity Photo
+#   "824171161"  # Affinity Designer
+#   "1014850245" # MONIT
+#   "1143437985" # Goodtask 3
+#   "411643860"  # DaisyDisk
+#   "413857545"  # Divvy
+# )
+# for app in "${mas_apps[@]}"; do
+#   echo "$app"
+# done
+
+# declare -a cask_apps=(
+# 	"1password"
+# 	"appcleaner"
+# 	"authy"
+# 	"atom"
+# 	"capture-one"
+# 	"carbon-copy-cloner"
+# 	"discord"
+# 	"google-chrome"
+# 	"karabiner-elements"
+# )
+# for app in "${cask_apps[@]}"; do
+#   brew cask install "$app"
+# done
