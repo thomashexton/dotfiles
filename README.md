@@ -14,7 +14,7 @@ So hit that fork button and get coding!
 
 ### Prerequisites
 
-* You need to have `git` install on your machine. For MacOS:
+* You need to have `git` installed on your machine. For MacOS:
 
 ```sh
 xcode-select --install

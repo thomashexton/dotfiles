@@ -38,17 +38,17 @@ plugins=(
   docker
   docker-compose
   dotenv
-  encode64
-  extract
+  # encode64
+  # extract
   git
   gpg-agent
   history-substring-search
   kubectl
-  ssh-agent
+  # ssh-agent
   vscode
   z
   zsh-autosuggestions
-  zsh_reload
+  # zsh_reload
   zsh-syntax-highlighting
   )
 

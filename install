@@ -10,6 +10,8 @@ sudo -v
 # Keep-alive: update existing `sudo` time stamp until `.macos` has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
+WORKDIR=$(pwd)
+
 # Do the following on MacOS only
 if [[ $(uname) == "Darwin" ]]; then
   echo "MacOS Detected"
@@ -22,9 +24,13 @@ if [[ $(uname) == "Darwin" ]]; then
     brew update
   fi
   # Install apps & packages with Brewfile
-  echo "Installing packages and apps with Homebrew & Cask..."
+  echo "Installing packages and apps with Homebrew..."
   brew bundle --file=dependencies/Brewfile --no-lock --no-upgrade
 fi
+
+# Install MAS apps
+echo "Installing Mac App Store apps with \"mas\"..."
+while read app; do mas list | awk '{print $1}' | grep "$app" >/dev/null 2>&1 || mas install $app; done < homebrew/mas.txt
 
 #### Shell (zsh) configuration ####
 # Install Oh My Zsh
@@ -36,7 +42,7 @@ else
   # Use the inbuilt mechanism to update Oh My Zsh
   echo "Oh My Zsh already installed, updating..."
   cd $HOME/.oh-my-zsh
-  git pull
+  git pull >/dev/null 2>&1
   cd $HOME/dotfiles
 fi
 
@@ -47,19 +53,19 @@ if [[ ! -d $HOME/.oh-my-zsh/custom/themes/powerlevel10k ]]; then
 else
   echo "Powerlevel10k already installed, updating..."
   cd $HOME/.oh-my-zsh/custom/themes/powerlevel10k
-  git pull
+  git pull >/dev/null 2>&1
   cd $HOME/dotfiles
 fi
 
 # Install additional zsh plugins not included with Oh My Zsh
-for r in zsh-autosuggestions zsh-syntax-highlighting; do
-  if [[ ! -d $HOME/.oh-my-zsh/custom/plugins/$r ]]; then
-    echo "Installing $r..."
-    git clone --depth=1 https://github.com/zsh-users/$r $HOME/.oh-my-zsh/custom/plugins/$r
+for plugin_name in zsh-autosuggestions zsh-syntax-highlighting; do
+  if [[ ! -d $HOME/.oh-my-zsh/custom/plugins/$plugin_name ]]; then
+    echo "Installing $plugin_name..."
+    git clone --depth=1 https://github.com/zsh-users/$plugin_name $HOME/.oh-my-zsh/custom/plugins/$plugin_name
   else
-    echo "$r already installed, updating..."
-    cd $HOME/.oh-my-zsh/custom/plugins/$r
-    git pull
+    echo "$plugin_name already installed, updating..."
+    cd $HOME/.oh-my-zsh/custom/plugins/$plugin_name
+    git pull >/dev/null 2>&1
     cd $HOME/dotfiles
   fi
 done
@@ -68,9 +74,9 @@ done
 if [[ ! -f custom/secret.zsh ]]; then
   touch custom/secret.zsh
 fi
-for f in custom/*; do
+for file in custom/*; do
   echo "Linking custom .zsh files..."
-  ln -sf $HOME/dotfiles/$f $HOME/.oh-my-zsh/$f
+  ln -sf $HOME/dotfiles/$file $HOME/.oh-my-zsh/$file
 done
 
 # Link ssh config
@@ -80,25 +86,23 @@ ln -sf $HOME/dotfiles/ssh/config $HOME/.ssh/config
 
 # Link $HOME dotfiles
 echo "Linking files to home directory..."
-for f in *; do
-  if [[ $f == "README.md" || $f == "install" ]]; then
-    echo "Ignoring special file $f"
-  elif [[ -d $f ]]; then
-    echo "Ignoring directory $f"
+for file in *; do
+  if [[ $file == "README.md" || $file == "install" ]]; then
+    echo "Ignoring special file $file"
+  elif [[ -d $file ]]; then
+    echo "Ignoring directory $file"
   else
-    ln -sf $HOME/dotfiles/$f $HOME/.$f
+    ln -sf $HOME/dotfiles/$file $HOME/.$file
   fi
 done
 
 # Create this file to suppress error from z on first 'cd'
-touch $HOME/.z
-
-# Change the users default shell
-echo "Changing the default shell..."
-sudo chsh -s /usr/local/bin/zsh $USER
+if [[ ! -f $HOME/.z ]]; then
+    touch $HOME/.z
+fi
 
 # Install asdf version manager plugins
-for p in nodejs ruby yarn; do
+for p in ruby nodejs yarn; do
   if [[ ! -d $HOME/.asdf/plugins/$p ]]; then
     echo "Installing asdf plugin $p..."
     asdf plugin add $p
@@ -113,5 +117,22 @@ done
 
 # Install default versions
 asdf install
+
+# Restore configs with mackup
+echo "Linking mackup config..."
+if [[ ! -d $HOME/.mackup ]]; then
+    mkdir -p $HOME/.mackup
+fi
+for f in mackup/*; do
+    ln -sf $WORKDIR/$f $HOME/.$f
+done
+echo "Restoring files with mackup..."
+mackup restore -f
+
+# Change the users default shell
+if [[ $SHELL != "$(brew --prefix)/bin/zsh" ]]; then
+    echo "Changing the default shell..."
+    sudo chsh -s $(brew --prefix)/bin/zsh $USER
+fi
 
 echo "Setup complete, quit terminal and open iTerm to continue..."
