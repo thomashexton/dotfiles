@@ -35,7 +35,7 @@ alias pg_start="launchctl load ~/Library/LaunchAgents"
 alias pg_stop="launchctl unload ~/Library/LaunchAgents"
 
 # Edit hosts file
-alias hosts='sudo $VISUAL_EDITOR /etc/hosts'
+alias hosts='sudo $EDITOR /etc/hosts'
 
 # GC Start
 alias cl='clear'

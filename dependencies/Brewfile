@@ -95,7 +95,6 @@ cask "visual-studio-code"
 cask "steelseries-exactmouse-tool"
 
 # declare -a cask_apps=(
-# 	"1password"
 # 	"appcleaner"
 # 	"authy"
 # 	"capture-one"

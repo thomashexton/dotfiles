@@ -48,7 +48,7 @@ plugins=(
   vscode
   z
   zsh-autosuggestions
-  # zsh_reload
+  zsh_reload
   zsh-syntax-highlighting
   )
 
