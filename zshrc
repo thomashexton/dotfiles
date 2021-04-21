@@ -44,7 +44,7 @@ plugins=(
   gpg-agent
   history-substring-search
   kubectl
-  # ssh-agent
+  ssh-agent
   vscode
   z
   zsh-autosuggestions
