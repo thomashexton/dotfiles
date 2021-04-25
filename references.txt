@@ -1,0 +1,4 @@
+https://medium.com/@webprolific/getting-started-with-dotfiles-43c3602fd789
+https://github.com/webpro/dotfiles
+https://github.com/pawelgrzybek/dotfiles/blob/master/setup-macos.sh
+https://wilsonmar.github.io/dotfiles
