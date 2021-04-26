@@ -98,7 +98,7 @@ if [[ ! -f $HOME/.z ]]; then
 fi
 
 # Install asdf version manager plugins
-for p in ruby nodejs yarn; do
+for p in ruby nodejs yarn kubectl; do
   if [[ ! -d $HOME/.asdf/plugins/$p ]]; then
     echo "Installing asdf plugin $p..."
     asdf plugin add $p
