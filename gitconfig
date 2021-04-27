@@ -4,3 +4,6 @@
 	default = current
 [pager]
 	branch = false
+[user]
+	name = Thomas Hexton
+	email = thomas.hexton@oneflare.com

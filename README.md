@@ -1,15 +1,5 @@
 # dotfiles
 
-## Welcome to Oneflare
-We provide these dotfiles as a way for engineers (or anyone, really) to get up and running quickly at Oneflare.
-
-They provide the necessary software and sane defaults for working with the various Oneflare codebases.
-
-The idea is that they should get better over time and you should be able to customise them to your liking.
-
-So hit that fork button and get coding!
-
-
 ## Install
 
 ### Prerequisites

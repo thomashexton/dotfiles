@@ -13,6 +13,7 @@ alias kill-everything="pkill -9 -f 'rb-fsevent|rails|spring|puma'"
 alias gqlschema="bundle exec rake graphql:dump_schema"
 
 # Git
+alias gcfo="git config --list --show-origin"
 alias gcpr="git checkout production"
 alias gfd="git diff --name-status master.."
 # Nicely formatted diff for announcements
@@ -54,3 +55,4 @@ alias wx='curl v2.wttr.in'
 
 # Copy public ip to the clipboard
 alias pubip='curl -s ipv4.icanhazip.com | tee >(pbcopy)'
+
