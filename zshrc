@@ -37,15 +37,15 @@ plugins=(
   aws
   docker
   docker-compose
-  dotenv
+  # dotenv
   # encode64
   # extract
   git
   gpg-agent
-  history-substring-search
+  # history-substring-search
   kubectl
   ssh-agent
-  vscode
+  # vscode
   z
   zsh-autosuggestions
   zsh_reload
