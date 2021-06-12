@@ -1,5 +1,6 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
+export PATH="/usr/local/sbin:$PATH"
 
 # Set name of the theme to load
 ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -26,6 +27,8 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
 HIST_STAMPS="yyyy-mm-dd"
+
+ZSH_DISABLE_COMPFIX=true
 
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*

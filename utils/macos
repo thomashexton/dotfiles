@@ -71,9 +71,9 @@ defaults write com.apple.dock mru-spaces -bool false
 
 ###############################################################################
 # System Preferences > Keyboard >
-defaults write NSGlobalDomain KeyRepeat -int 1
+defaults write NSGlobalDomain KeyRepeat -int 5
 # System Preferences > Keyboard >
-defaults write NSGlobalDomain InitialKeyRepeat -int 10
+defaults write NSGlobalDomain InitialKeyRepeat -int 100
 
 # Disable the “Are you sure you want to open this application?” dialog
 defaults write com.apple.LaunchServices LSQuarantine -bool false

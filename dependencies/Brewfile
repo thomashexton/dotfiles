@@ -27,6 +27,7 @@ brew "git"
 brew "hub"
 # Production Grade K8s Installation, Upgrades, and Management
 brew "kops"
+brew "kubectl"
 # Tool that can switch between kubectl contexts easily and create aliases
 brew "kubectx"
 # Not sure tbh
@@ -95,6 +96,8 @@ cask "spotify"
 cask "tableplus"
 cask "visual-studio-code"
 cask "steelseries-exactmouse-tool"
+cask "authy"
+cask "logitech-options"
 
 mas "1Password 7", id: 1333542190
 # mas "Affinity Designer", id: 824171161
