@@ -45,7 +45,7 @@ case $(uname -m) in
       softwareupdate --install-rosetta --agree-to-license
       echo "Installing x86 Homebrew ..."
       arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/thomashexton/.zprofile
+      echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/$USER/.zprofile
       eval "$(/opt/homebrew/bin/brew shellenv)"
     else
       echo "x86 Homebrew also already installed, updating ..."
@@ -60,12 +60,12 @@ case $(uname -m) in
 esac
 
 # Install packages and apps from Brewfile
+printf "\n"
 echo "Installing packages and apps with Homebrew..."
 brew bundle --file=dependencies/Brewfile --no-lock --no-upgrade
 
 # Install Oh My Zsh
 if [[ ! -d $HOME/.oh-my-zsh ]]; then
-  # Install Oh My Zsh
   echo "Installing Oh My Zsh..."
   RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
 else
@@ -101,7 +101,7 @@ for r in zsh-autosuggestions zsh-syntax-highlighting; do
 done
 
 # Uncomment this if you don't backup your secrets using Mackup
-# Link custom .zsh files to Oh My Zsh custom folder
+# Links custom .zsh files to Oh My Zsh custom folder
 # if [[ ! -f custom/secret.zsh ]]; then
 #   touch custom/secret.zsh
 # fi
@@ -116,6 +116,7 @@ mkdir -p $HOME/.ssh
 ln -sf $HOME/$REPO_NAME/ssh/config $HOME/.ssh/config
 
 # Link $HOME dotfiles
+# TODO: consider how to confirm to XDG file structure
 echo "Linking files to home directory..."
 for file in sym-links/*; do
   if [[ ! -d $file ]]; then
