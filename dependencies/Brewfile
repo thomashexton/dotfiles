@@ -2,7 +2,7 @@ tap "homebrew/cask-fonts"
 tap "homebrew/cask-drivers"
 tap "homebrew/services"
 
-tap "brew tap epk/epk" # SF Mono Nerd Font
+tap "epk/epk" # SF Mono Nerd Font
 
 # CLI
 # Extendable version manager with support for Ruby, Node.js, Erlang & more

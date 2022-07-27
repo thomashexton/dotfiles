@@ -128,7 +128,7 @@ done
 
 # Create this file to suppress error from z on first 'cd'
 if [[ ! -f $HOME/.z ]]; then
-    touch $HOME/.z
+  touch $HOME/.z
 fi
 
 # Install asdf version manager plugins
@@ -145,10 +145,10 @@ done
 # Restore configs with mackup
 echo "Linking mackup config..."
 if [[ ! -d $HOME/.mackup ]]; then
-    mkdir $HOME/.mackup
+  mkdir $HOME/.mackup
 fi
 for f in mackup/*; do
-    ln -sf $WORKDIR/$f $HOME/.$f
+  ln -sf $WORKDIR/$f $HOME/.$f
 done
 echo "Restoring files with mackup..."
 mackup restore -f
