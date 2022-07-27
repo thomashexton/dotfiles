@@ -96,7 +96,7 @@ for r in zsh-autosuggestions zsh-syntax-highlighting; do
     echo "$r already installed, updating..."
     cd $HOME/.oh-my-zsh/custom/plugins/$r
     git pull
-    cd $HOME/dotfiles
+    cd $WORKDIR
   fi
 done
 
@@ -107,20 +107,20 @@ done
 # fi
 for file in custom/*; do
   echo "Creating symbolic linking for $file"
-  ln -sf $HOME/$REPO_NAME/$file $HOME/.oh-my-zsh/$file
+  ln -sf $WORKDIR/$file $HOME/.oh-my-zsh/$file
 done
 
 # Link ssh config
 echo "Linking ssh config..."
 mkdir -p $HOME/.ssh
-ln -sf $HOME/$REPO_NAME/ssh/config $HOME/.ssh/config
+ln -sf $WORKDIR/ssh/config $HOME/.ssh/config
 
 # Link $HOME dotfiles
 # TODO: consider how to confirm to XDG file structure
 echo "Linking files to home directory..."
 for file in sym-links/*; do
   if [[ ! -d $file ]]; then
-    ln -sf $HOME/$REPO_NAME/$file $HOME/.${file#sym-links/}
+    ln -sf $WORKDIR/$file $HOME/.${file#sym-links/}
   else
     echo "Ignoring directory $file"
   fi

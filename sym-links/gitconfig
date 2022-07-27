@@ -1,3 +1,6 @@
+[user]
+	name = Thomas Hexton
+	email = 25544371+thomashexton@users.noreply.github.com
 [core]
 	editor = code --wait
 [push]
