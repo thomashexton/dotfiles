@@ -5,5 +5,7 @@
 	editor = code --wait
 [push]
 	default = current
+[pull]
+	rebase = false
 [pager]
 	branch = false
