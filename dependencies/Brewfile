@@ -3,6 +3,7 @@ tap "homebrew/cask-drivers"
 tap "homebrew/services"
 
 tap "epk/epk" # SF Mono Nerd Font
+tap "koekeishiya/formulae"
 
 # CLI
 # Extendable version manager with support for Ruby, Node.js, Erlang & more
@@ -35,6 +36,10 @@ brew "postgres"
 # Open source relational database management system
 # brew "mysql-client@5.7"
 brew "redis"
+# Simple keyboard hotkey daemon, counterpart of yabai
+brew "skhd"
+# Automagic window management
+brew "yabai"
 # Tracks most-used directories to make cd smarter
 brew "z"
 
@@ -54,13 +59,14 @@ cask "gpg-suite-no-mail" # needed for asdf node install?
 cask "insomnia"
 cask "iterm2"
 cask "karabiner-elements"
-# cask "logitech-options"
+# cask "logitech-options" # cask version is not the latest "+" variant
 cask "linearmouse"
 cask "lunar"
 cask "notion"
 cask "signal"
 cask "slack"
 cask "sonos"
+cask "sony-ps-remote-play"
 cask "spacelauncher"
 cask "spotify"
 cask "tableplus"

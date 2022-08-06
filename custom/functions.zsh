@@ -3,9 +3,9 @@ function migrate() {
   read "reply?$message"
   if [[ "$reply" =~ ^[Yy]$ ]]
   then
-    dbmigrate && dbmigrate RAILS_ENV=test;
+    "bundle exec rake db:migrate" && "bundle exec rake db:migrate RAILS_ENV=test";
   else
-    dbmigrate;
+    "bundle exec rake db:migrate";
   fi
 }
 
@@ -14,9 +14,9 @@ function rollback() {
   read "reply?$message"
   if [[ "$reply" =~ ^[Yy]$ ]]
   then
-    dbrollback && dbrollback RAILS_ENV=test;
+    "bundle exec rake db:rollback" && "bundle exec rake db:rollback RAILS_ENV=test";
   else
-    dbrollback;
+    "bundle exec rake db:rollback";
   fi
 }
 

@@ -8,9 +8,11 @@ echo "Settin' up..."
 WORKDIR=$(pwd)
 REPO_NAME="dotfiles-m1"
 
-# asks for the administrator password upfront
-# caches the password for 15 mins ...?
+# Ask for the administrator password upfront
 sudo -v
+
+# Keep-alive: update existing `sudo` time stamp until `setup` has finished
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 echo "Installing Homebrew"
 
@@ -22,6 +24,7 @@ case $(uname -m) in
   "x86_64")
     echo "Intel hardware detected."
     if [[ ! -f "$I_INSTALL_LOC" ]]; then
+      echo "Installing x86 Homebrew ..."
       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     else
       brew update
@@ -34,27 +37,33 @@ case $(uname -m) in
     if [[ ! -f "$A_INSTALL_LOC" ]]; then
       echo "Installing arm64 Homebrew ..."
       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/$USER/.zprofile
+      eval "$(/opt/homebrew/bin/brew shellenv)"
     else
       echo "arm64 Homebrew already installed, updating ..."
       brew update
     fi
-    # second, install x86 version to support packages without Apple Silicon variant
-    if [[ ! -f "$I_INSTALL_LOC" ]]; then
-      # TODO: check if Rosetta is already installed
+
+    # # second, install x86 version to support packages without Apple Silicon variant
+    # if [[ ! -f "$I_INSTALL_LOC" ]]; then
+    #   echo "Installing x86 Homebrew ..."
+    #   arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    # else
+    #   echo "x86 Homebrew also already installed, updating ..."
+    #   arch -x86_64 $I_INSTALL_LOC update
+    # fi
+
+    echo "Checking if Rosetta 2 is installed..."
+    if [[ ! -f /Library/Apple/usr/share/rosetta/rosetta ]]; then
       echo "Installing Rosetta 2 ..."
       softwareupdate --install-rosetta --agree-to-license
-      echo "Installing x86 Homebrew ..."
-      arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/$USER/.zprofile
-      eval "$(/opt/homebrew/bin/brew shellenv)"
     else
-      echo "x86 Homebrew also already installed, updating ..."
-      arch -x86_64 $I_INSTALL_LOC update
+      echo "Roestta 2 already installed."
     fi
   ;;
 
   *)
-    echo "Homebrew requires macOS using Intel CPU or Apple Silicon."
+    echo "To install Homebrew, this script requires a Mac using Intel CPU or Apple Silicon."
     exit 1
   ;;
 esac
@@ -153,4 +162,8 @@ done
 echo "Restoring files with mackup..."
 mackup restore -f
 
-echo "Setup complete, quit terminal and open iTerm to continue..."
+if [[ ! -f $HOME/.p10k.zsh ]]; then
+  echo "Setup complete, quit terminal and open iTerm to continue..."
+else
+  echo "Setup complete."
+fi

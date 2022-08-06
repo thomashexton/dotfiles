@@ -5,8 +5,6 @@ alias ibrew='arch -x86_64 /usr/local/bin/brew'
 alias be="bundle exec"
 alias rs="bundle exec rails s"
 alias rc="bundle exec rails c"
-alias dbmigrate="bundle exec rake db:migrate"
-alias dbrollback="bundle exec rake db:rollback"
 alias db:reset="bundle exec rake db:reset"
 alias db:reset:test="bundle exec rake db:reset RAILS_ENV=test"
 alias rspec="bundle exec rspec"
@@ -32,6 +30,8 @@ alias ve='$VISUAL_EDITOR'
 # Use nvim instead of vim/vi
 alias vim='nvim'
 alias vi='nvim'
+alias yab='vim ~/.yabairc'
+alias skh='vim ~/.skhdrc'
 
 # This is required so you can use aliases with 'watch'
 alias watch='watch '
