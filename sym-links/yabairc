@@ -1,5 +1,3 @@
-#!/usr/bin/env sh
-
 sudo yabai --load-sa
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 
@@ -40,6 +38,7 @@ yabai -m config mouse_drop_action          swap
 yabai -m rule --add app="^Activity Monitor$" manage=off
 yabai -m rule --add app="^Archive Utility$" manage=off
 yabai -m rule --add app="^Battle.net$" manage=off
+yabai -m rule --add app="^Karabiner-EventViewer$" manage=off
 yabai -m rule --add app="^Logi Options$" manage=off
 yabai -m rule --add title='Preferences$' manage=off
 yabai -m rule --add app="^PS Remote Play$" manage=off
