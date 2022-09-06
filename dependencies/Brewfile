@@ -5,7 +5,7 @@ tap "homebrew/services"
 tap "epk/epk" # SF Mono Nerd Font
 tap "koekeishiya/formulae"
 
-# CLI
+## CLI
 # Extendable version manager with support for Ruby, Node.js, Erlang & more
 brew "asdf"
 # Official Amazon AWS command-line interface
@@ -14,8 +14,8 @@ brew "asdf"
 brew "git"
 # Make git flow easier
 # brew "git-flow-avh"
-# Add GitHub support to git on the command-line
-brew "hub"
+# GitHub's own specific CLI
+brew "gh"
 # Production Grade K8s Installation, Upgrades, and Management
 # brew "kops"
 # brew "kubectl"
@@ -43,7 +43,7 @@ brew "yabai"
 # Tracks most-used directories to make cd smarter
 brew "z"
 
-# Casks (GUI)
+## Casks (GUI)
 cask "1password" # mas doesn't have v8 yet
 # cask "authy"
 # cask "battle-net"
@@ -72,7 +72,7 @@ cask "spotify"
 cask "tableplus"
 cask "visual-studio-code"
 
-# Mac App Store Apps
+## Mac App Store Apps
 # mas "1Password 7", id: 1333542190
 # mas "Affinity Designer", id: 824171161
 # mas "Affinity Photo", id: 824183456
