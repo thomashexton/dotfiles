@@ -1,24 +1,24 @@
-function migrate() {
-  local message="Test ENV too? "
-  read "reply?$message"
-  if [[ "$reply" =~ ^[Yy]$ ]]
-  then
-    "bundle exec rake db:migrate" && "bundle exec rake db:migrate RAILS_ENV=test";
-  else
-    "bundle exec rake db:migrate";
-  fi
-}
+# function migrate() {
+#   local message="Test ENV too? "
+#   read "reply?$message"
+#   if [[ "$reply" =~ ^[Yy]$ ]]
+#   then
+#     $(bundle exec rake db:migrate) && $(bundle exec rake db:migrate RAILS_ENV=test);
+#   else
+#     "bundle exec rake db:migrate";
+#   fi
+# }
 
-function rollback() {
-  local message="Test ENV too? "
-  read "reply?$message"
-  if [[ "$reply" =~ ^[Yy]$ ]]
-  then
-    "bundle exec rake db:rollback" && "bundle exec rake db:rollback RAILS_ENV=test";
-  else
-    "bundle exec rake db:rollback";
-  fi
-}
+# function rollback() {
+#   local message="Test ENV too? "
+#   read "reply?$message"
+#   if [[ "$reply" =~ ^[Yy]$ ]]
+#   then
+#     "bundle exec rake db:rollback" && "bundle exec rake db:rollback RAILS_ENV=test";
+#   else
+#     "bundle exec rake db:rollback";
+#   fi
+# }
 
 #
 # Usage:
