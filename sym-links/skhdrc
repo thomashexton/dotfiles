@@ -66,10 +66,10 @@ alt - 8 : yabai -m space --focus 8
 alt - 9 : yabai -m space --focus 9
 
 # alternate monitor focus
-alt - m        : yabai -m display --focus next
-cmd + alt - j  : yabai -m display --focus next
-alt - n        : yabai -m display --focus prev
-cmd + alt - k  : yabai -m display --focus prev
+# alt - n        : yabai -m display --focus next
+alt + ctrl - k  : yabai -m display --focus next
+# alt - m        : yabai -m display --focus prev
+alt + ctrl - j  : yabai -m display --focus prev
 
 # send window to monitor and follow focus
 shift + alt - n : yabai -m window --display next #; yabai -m display --focus next
@@ -81,7 +81,7 @@ shift + alt - d : yabai -m window --resize left:-20:0
 
 # decrease window size
 shift + alt - s : yabai -m window --resize bottom:0:-20
-shift + alt - a : yabai -m window --resize top:0:20
+shift + alt - a : yabai -m window --resize top:0:-20
 
 # restarting services
 shift + alt - z : brew services restart yabai
