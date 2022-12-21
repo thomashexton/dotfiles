@@ -14,7 +14,7 @@ yabai -m config window_opacity_duration    0.0
 yabai -m config active_window_opacity      1.0
 yabai -m config normal_window_opacity      0.90
 yabai -m config window_border              on
-yabai -m config window_border_width        4
+yabai -m config window_border_width        2
 yabai -m config active_window_border_color 0xffff7900
 yabai -m config normal_window_border_color 0xff555555
 yabai -m config insert_feedback_color      0xffd75f5f
@@ -24,9 +24,9 @@ yabai -m config auto_balance               off
 # general space settings
 yabai -m config layout                     bsp
 yabai -m config top_padding                0
-yabai -m config bottom_padding             0
-yabai -m config left_padding               0
-yabai -m config right_padding              0
+yabai -m config bottom_padding             10
+yabai -m config left_padding               10
+yabai -m config right_padding              10
 yabai -m config window_gap                 5
 
 # mouse settings
@@ -45,15 +45,11 @@ yabai -m config --space 7 layout float
 yabai -m rule --add app="^Activity Monitor$" manage=off
 yabai -m rule --add app="^Archive Utility$" manage=off
 yabai -m rule --add app="^Battle.net$" manage=off
-yabai -m rule --add app="^Harvest$" manage=off
 yabai -m rule --add app="^Karabiner-EventViewer$" manage=off
 yabai -m rule --add app="^Linear Mouse$" manage=off
 yabai -m rule --add app="^Lunar$" manage=off
-yabai -m rule --add app="^Logi Options+$" manage=off
-yabai -m rule --add title='Preferences$' manage=off
-yabai -m rule --add app="^PS Remote Play$" manage=off
-yabai -m rule --add app="^System Preferences$" manage=off
-yabai -m rule --add app="^World of Warcraft$" manage=off
+yabai -m rule --add app="^Logi Options\+$" manage=off
+yabai -m rule --add app="Preferences$" manage=off
 yabai -m rule --add app="^System Information$" manage=off
 yabai -m rule --add app="^System Preferences$" manage=off
 
