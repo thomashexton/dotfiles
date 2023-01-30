@@ -53,13 +53,13 @@ case $(uname -m) in
     #   arch -x86_64 $I_INSTALL_LOC update
     # fi
 
-    echo "Checking if Rosetta 2 is installed..."
-    if [[ ! -f /Library/Apple/usr/share/rosetta/rosetta ]]; then
-      echo "Installing Rosetta 2 ..."
-      softwareupdate --install-rosetta --agree-to-license
-    else
-      echo "Roestta 2 already installed."
-    fi
+    # echo "Checking if Rosetta 2 is installed..."
+    # if [[ ! -f /Library/Apple/usr/share/rosetta/rosetta ]]; then
+    #   echo "Installing Rosetta 2 ..."
+    #   softwareupdate --install-rosetta --agree-to-license
+    # else
+    #   echo "Roestta 2 already installed."
+    # fi
   ;;
 
   *)

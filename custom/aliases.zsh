@@ -20,7 +20,7 @@ alias gcfo="git config --list --show-origin"
 alias gfd="git diff --name-status master.."
 
 # Nicely formatted diff for announcements
-alias deploydiff="git log main..staging --pretty=format:"%<(23)%an    %s" --abbrev-commit"
+# alias deploydiff="git log main..staging --pretty=format:"%<(23)%an    %s" --abbrev-commit"
 
 # iCloud dir
 alias ic="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs"
