@@ -1,8 +1,8 @@
 WORKDIR=$(pwd)
 # REPO_NAME="dotfiles-m1"
 
+# Asks for the administrator password upfront
 function request_sudo_privileges() {
-  # Ask for the administrator password upfront
   echo "Requesting sudo privileges..."
   sudo -v
 
@@ -10,41 +10,55 @@ function request_sudo_privileges() {
   while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 }
 
+# Installs Rosetta if not already installed and user agrees
+function install_rosetta() {
+  local rosetta_status=$(sysctl sysctl.proc_translated)
+
+  if [[ ${rosetta_status} == "sysctl.proc_translated: 1" ]]; then
+    echo "Rosetta is already installed."
+  else
+    echo -n "Rosetta is not installed. Do you want to install it now? (y/n): "
+    if read -t 3 -n 1 install_rosetta; then
+      echo
+      if [[ ${install_rosetta} =~ [Yy] ]]; then
+        softwareupdate --install-rosetta --agree-to-license
+        echo "Rosetta has been installed."
+      else
+        echo "Rosetta has not been installed."
+      fi
+    else
+      echo
+      echo "Timeout reached. No input provided; Rosetta has not been installed."
+    fi
+  fi
+}
+
+# Installs Homebrew on Apple Silicon Macs and sets up the environment
 function install_homebrew() {
-  if [[ $(uname -m) == "arm64" ]]; then
+  local machine_arch=$(uname -m)
+
+  if [[ ${machine_arch} == "arm64" ]]; then
     if [[ -d "/opt/homebrew" ]]; then
       echo "Homebrew already installed..."
     else
       echo "Installing Homebrew..."
       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> "$HOME/.zprofile"
+      echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> "${HOME}/.zprofile"
     fi
 
     echo "Setting up Homebrew environment..."
     eval "$(/opt/homebrew/bin/brew shellenv)"
 
-    if brew doctor &>/dev/null; then
+    local brew_success=$(brew doctor &>/dev/null)
+
+    if ${brew_success}; then
       echo "Homebrew installation is successful."
     else
       echo "Error: Homebrew installation is unsuccessful. Please fix the issues shown by 'brew doctor' and run this script again."
       exit 1
     fi
 
-  if [[ $(sysctl sysctl.proc_translated) == "sysctl.proc_translated: 1" ]]; then
-    echo "Rosetta is already installed."
-  else
-    echo -e "Rosetta is not installed. Do you want to install it now? (y/n)"
-    read -n 1 install_rosetta
-    echo
-    if [[ $install_rosetta =~ [Yy] ]]; then
-      softwareupdate --install-rosetta --agree-to-license
-      echo "Rosetta has been installed."
-    else
-      echo "Rosetta has not been installed."
-    fi
-  fi
-
-
+    install_rosetta
   else
     echo "To install Homebrew, this script requires a Mac using Apple Silicon."
     exit 1
@@ -54,14 +68,14 @@ function install_homebrew() {
   brew update
 }
 
+# Installs packages and apps from Brewfile
 function install_homebrew_packages_and_apps() {
-  # Install packages and apps from Brewfile
   echo "Installing packages and apps with Homebrew..."
   brew bundle --file=dependencies/Brewfile --no-lock --no-upgrade
 }
 
+# Installs Oh My Zsh
 function install_oh_my_zsh() {
-  # Install Oh My Zsh
   if [[ -d $HOME/.oh-my-zsh ]]; then
     # Use the inbuilt mechanism to update Oh My Zsh
     echo "Oh My Zsh already installed, updating..."
@@ -72,8 +86,8 @@ function install_oh_my_zsh() {
   fi
 }
 
+# Installs additional zsh plugins not included with Oh My Zsh
 function install_additional_zsh_plugins() {
-  # Install additional zsh plugins not included with Oh My Zsh
   local plugins=("zsh-autosuggestions" "zsh-syntax-highlighting")
 
   for plugin in "${plugins[@]}"; do
@@ -88,8 +102,8 @@ function install_additional_zsh_plugins() {
   done
 }
 
+# Installs Powerlevel10k zsh theme
 function install_powerlevel10k() {
-  # Install Powerlevel10k zsh theme
   local powerlevel10k_dir="$HOME/.oh-my-zsh/custom/themes/powerlevel10k"
 
   echo "Installing Powerlevel10k zsh theme..."
@@ -105,13 +119,19 @@ function install_powerlevel10k() {
 
 function link_custom_configs() {
   # Prompt user if they use Mackup to backup secrets
-  echo "Do you use Mackup to backup your secrets? (y/n):"
-  read -n 1 use_mackup
-  echo
+  echo -n "Do you use Mackup to backup your secrets? (y/n): "
+  if read -t 3 -n 1 use_mackup; then
+    echo
 
-  if [[ "$use_mackup" =~ [Nn] ]]; then
-    # Create custom .zsh file for secrets if not using Mackup
-    touch custom/secret.zsh
+    if [[ "$use_mackup" =~ [Nn] ]]; then
+      # Create custom .zsh file for secrets if not using Mackup
+      touch custom/secret.zsh
+    else
+      echo "Script assumed you DO use Mackup, and did not create ~/custom/secret.zsh file."
+    fi
+  else
+    echo
+    echo "Timeout reached. No input provided; script assumed you DO use Mackup, and DID NOT create ~/custom/secret.zsh file."
   fi
 
   # Link custom .zsh files to Oh My Zsh custom folder
@@ -140,8 +160,8 @@ function link_custom_configs() {
   touch "$HOME/.z"
 }
 
+# Installs asdf version manager plugins
 function install_asdf_plugins() {
-  # Install asdf version manager plugins
   while read -r plugin _; do
     if asdf plugin-list | grep -q "^$plugin$"; then
       echo "asdf plugin $plugin already added, updating..."
@@ -153,15 +173,15 @@ function install_asdf_plugins() {
   done < sym-links/tool-versions
 }
 
+# Restores program configs with Mackup
 function restore_configs_with_mackup() {
-  # Restore configs with mackup
-  echo "Linking mackup config..."
+  echo "Linking Mackup config..."
   mkdir -p $HOME/.mackup
 
   for file in mackup/*; do
     ln -sf $WORKDIR/$file $HOME/.$file
   done
-  echo "Restoring files with mackup..."
+  echo "Restoring files with Mackup..."
   mackup restore -f
 }
 
