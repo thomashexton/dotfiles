@@ -32,7 +32,7 @@ brew "mas"
 # NeoVim, get on it
 brew "neovim"
 # Postgres DB
-brew "postgres"
+brew "postgresql@15"
 # Open source relational database management system
 # brew "mysql-client@5.7"
 brew "redis"
