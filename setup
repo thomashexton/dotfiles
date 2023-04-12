@@ -24,26 +24,26 @@
 
 # Open log file for writing and append current date/time
 LOGFILE="$HOME/.bootstrap.log"
-printf "$(date): Starting bootstrap script..." | tee -a "$LOGFILE"
+echo "$(date): Starting bootstrap script..." | tee -a "$LOGFILE"
 
 # This will cause the script to exit immediately if any command returns a non-zero exit status.
 # It will also cause the script to exit if any unset variable is used,
 # and will cause pipes to exit with a non-zero status if any command in the pipe fails.
 set -euo pipefail
 
-printf "Bootstrapping..."
+echo "Bootstrapping..."
 
 WORKDIR=$(pwd)
 REPO_NAME="dotfiles-m1"
 
 # Ask for the administrator password upfront
-printf "Requesting sudo privileges..."
+echo "Requesting sudo privileges..."
 sudo -v
 
 # Keep-alive: update existing `sudo` time stamp until `bootstrap` script has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-printf "Installing Homebrew"
+echo "Installing Homebrew"
 
 I_INSTALL_LOC=/usr/local/bin/brew
 A_INSTALL_LOC=/opt/homebrew/bin/brew
@@ -51,9 +51,9 @@ A_INSTALL_LOC=/opt/homebrew/bin/brew
 # Checks which hardware the script has been called on
 case $(uname -m) in
   "x86_64")
-    printf "Intel hardware detected."
+    echo "Intel hardware detected."
     if [[ ! -f "$I_INSTALL_LOC" ]]; then
-      printf "Installing x86 Homebrew ..."
+      echo "Installing x86 Homebrew ..."
       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     else
       brew update
@@ -61,59 +61,59 @@ case $(uname -m) in
   ;;
 
   "arm64")
-    printf "Apple Silicon hardware detected."
+    echo "Apple Silicon hardware detected."
     # First, install arm64 version
     if [[ ! -f "$A_INSTALL_LOC" ]]; then
-      printf "Installing arm64 Homebrew ..."
+      echo "Installing arm64 Homebrew ..."
       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      printf 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/$USER/.zprofile
+      echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/$USER/.zprofile
       eval "$(/opt/homebrew/bin/brew shellenv)"
     else
-      printf "arm64 Homebrew already installed, updating ..."
+      echo "arm64 Homebrew already installed, updating ..."
       brew update
     fi
 
     # Add the line to check the `brew doctor` output
-    printf "Checking Homebrew installation with 'brew doctor' ..."
+    echo "Checking Homebrew installation with 'brew doctor' ..."
     if brew doctor &>/dev/null; then
-      printf "Homebrew installation is successful."
+      echo "Homebrew installation is successful."
     else
-      printf "Error: Homebrew installation is unsuccessful. Please fix the issues shown by 'brew doctor' and run this script again."
+      echo "Error: Homebrew installation is unsuccessful. Please fix the issues shown by 'brew doctor' and run this script again."
       exit 1
     fi
 
-    printf "Checking if Rosetta 2 is installed..."
+    echo "Checking if Rosetta 2 is installed..."
     if [[ $(sysctl sysctl.proc_translated) == "sysctl.proc_translated: 1" ]]; then
-      printf "Rosetta is already installed."
+      echo "Rosetta is already installed."
     else
       read -p "Rosetta is not installed. Do you want to install it now? (Y/N) " install_rosetta
       if [[ $install_rosetta =~ [Yy] ]]; then
         softwareupdate --install-rosetta --agree-to-license
-        printf "Rosetta has been installed."
+        echo "Rosetta has been installed."
       else
-        printf "Rosetta has not been installed."
+        echo "Rosetta has not been installed."
       fi
     fi
   ;;
 
   *)
-    printf "To install Homebrew, this script requires a Mac using Intel CPU or Apple Silicon."
+    echo "To install Homebrew, this script requires a Mac using Intel CPU or Apple Silicon."
     exit 1
   ;;
 esac
 
 # Install packages and apps from Brewfile
-printf "\n"
-printf "Installing packages and apps with Homebrew..."
+echo "\n"
+echo "Installing packages and apps with Homebrew..."
 brew bundle --file=dependencies/Brewfile --no-lock --no-upgrade
 
 # Install Oh My Zsh
 if [[ ! -d $HOME/.oh-my-zsh ]]; then
-  printf "Installing Oh My Zsh..."
+  echo "Installing Oh My Zsh..."
   RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
 else
   # Use the inbuilt mechanism to update Oh My Zsh
-  printf "Oh My Zsh already installed, updating..."
+  echo "Oh My Zsh already installed, updating..."
   cd $HOME/.oh-my-zsh
   git pull >/dev/null 2>&1
   cd $WORKDIR
@@ -121,10 +121,10 @@ fi
 
 # Install Powerlevel10k zsh theme
 if [[ ! -d $HOME/.oh-my-zsh/custom/themes/powerlevel10k ]]; then
-  printf "Installing Powerlevel10k zsh theme..."
+  echo "Installing Powerlevel10k zsh theme..."
   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME/.oh-my-zsh/custom/themes/powerlevel10k
 else
-  printf "Powerlevel10k already installed, updating..."
+  echo "Powerlevel10k already installed, updating..."
   cd $HOME/.oh-my-zsh/custom/themes/powerlevel10k
   git pull >/dev/null 2>&1
   cd $WORKDIR
@@ -133,10 +133,10 @@ fi
 # Install additional zsh plugins not included with Oh My Zsh
 for r in zsh-autosuggestions zsh-syntax-highlighting; do
   if [[ ! -d $HOME/.oh-my-zsh/custom/plugins/$r ]]; then
-    printf "Installing $r..."
+    echo "Installing $r..."
     git clone --depth=1 https://github.com/zsh-users/$r $HOME/.oh-my-zsh/custom/plugins/$r
   else
-    printf "$r already installed, updating..."
+    echo "$r already installed, updating..."
     cd $HOME/.oh-my-zsh/custom/plugins/$r
     git pull
     cd $WORKDIR
@@ -149,23 +149,23 @@ done
 #   touch custom/secret.zsh
 # fi
 for file in custom/*; do
-  printf "Creating symbolic linking for $file"
+  echo "Creating symbolic linking for $file"
   ln -sf $WORKDIR/$file $HOME/.oh-my-zsh/$file
 done
 
 # Link ssh config
-printf "Linking ssh config..."
+echo "Linking ssh config..."
 mkdir -p $HOME/.ssh
 ln -sf $WORKDIR/ssh/config $HOME/.ssh/config
 
 # Link $HOME dotfiles
 # TODO: consider how to confirm to XDG file structure
-printf "Linking files to home directory..."
+echo "Linking files to home directory..."
 for file in sym-links/*; do
   if [[ ! -d $file ]]; then
     ln -sf $WORKDIR/$file $HOME/.${file#sym-links/}
   else
-    printf "Ignoring directory $file"
+    echo "Ignoring directory $file"
   fi
 done
 
@@ -177,27 +177,27 @@ fi
 # Install asdf version manager plugins
 for p in $(awk '{print $1}' < sym-links/tool-versions); do
   if [[ ! -d $HOME/.asdf/plugins/$p ]]; then
-    printf "Adding asdf plugin $p..."
+    echo "Adding asdf plugin $p..."
     asdf plugin add $p
   else
-    printf "asdf plugin $p already added, updating..."
+    echo "asdf plugin $p already added, updating..."
     asdf plugin update $p >/dev/null 2>&1
   fi
 done
 
 # Restore configs with mackup
-printf "Linking mackup config..."
+echo "Linking mackup config..."
 if [[ ! -d $HOME/.mackup ]]; then
   mkdir $HOME/.mackup
 fi
 for f in mackup/*; do
   ln -sf $WORKDIR/$f $HOME/.$f
 done
-printf "Restoring files with mackup..."
+echo "Restoring files with mackup..."
 mackup restore -f
 
 if [[ ! -f $HOME/.p10k.zsh ]]; then
-  printf "Bootstrap complete, quit terminal and open iTerm to continue..."
+  echo "Bootstrap complete, quit terminal and open iTerm to continue..."
 else
-  printf "Bootstrap complete."
+  echo "Bootstrap complete."
 fi
