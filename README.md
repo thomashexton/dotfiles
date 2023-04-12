@@ -1,4 +1,16 @@
-# dotfiles m1
+# dotfiles
+
+Dotfiles for configuring macOS development environment on Apple M1 Macs.
+
+## Table of Contents
+
+1. [Before Setup](#before-setup)
+   - [Prerequisites](#prerequisites)
+2. [Setup](#setup)
+3. [After Setup](#after-setup)
+   - [Git](#git)
+   - [SSH](#ssh)
+   - [Secrets](#secrets)
 
 ## Before Setup
 
@@ -12,6 +24,8 @@
 
 ## Setup
 
+To set up your environment with these dotfiles, execute the following commands:
+
 ```sh
 git clone https://github.com/thomashexton/dotfiles.git ~/dotfiles
 cd ~/dotfiles
@@ -22,8 +36,9 @@ cd ~/dotfiles
 
 ### Git
 
-- Run the following, replacing values with your own:
-- It is recommended to use your GitHub-provided `noreply` address ... [see setting your commit email address.](https://help.github.com/en/github/setting-up-and-managing-your-github-user-account/setting-your-commit-email-address#setting-your-commit-email-address-on-github)
+- Replace values with your own, and then run.
+
+Note: it is recommended to use your GitHub-provided `noreply` address ... [see setting your commit email address](https://help.github.com/en/github/setting-up-and-managing-your-github-user-account/setting-your-commit-email-address#setting-your-commit-email-address-on-github).
 
   ```sh
   git config --global user.name "Your Name"
@@ -39,7 +54,7 @@ git config --global gpg.program "gpg"
 
 ### SSH
 
-- Either restore your ssh key or [generate a new key](https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
+- Either restore your ssh key or [generate a new key](https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
 
 ### Secrets
 
