@@ -47,7 +47,7 @@ brew "z"
 cask "1password" # mas doesn't have v8 yet
 # cask "authy"
 # cask "battle-net"
-# cask "brave-browser"
+cask "brave-browser"
 cask "docker"
 cask "dropbox"
 cask "firefox"
@@ -65,11 +65,11 @@ cask "linearmouse"
 cask "lunar"
 cask "notion"
 cask "signal"
-cask "slack"
+# cask "slack"
 cask "sonos"
 # cask "sony-ps-remote-play"
-cask "spacelauncher"
-cask "spotify"
+# cask "spacelauncher"
+# cask "spotify"
 cask "tableplus"
 cask "visual-studio-code"
 
@@ -89,7 +89,7 @@ cask "visual-studio-code"
 # mas "Newton", id: 1059655371
 # mas "Numbers", id: 409203825
 # mas "Pages", id: 409201541
-# mas "Parcel", id: 639968404
+mas "Parcel", id: 639968404
 # mas "Session", id: 1521432881
 # mas "ToothFairy", id: 1191449274
 # mas "WireGuard", id: 1451685025
