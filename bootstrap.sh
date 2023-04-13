@@ -35,7 +35,7 @@ set -euo pipefail
 echo "Bootstrapping..."
 
 # Import all the bootstrap functions
-source bootstrap_functions.sh
+source "$(dirname "$0")/bootstrap_functions.sh"
 
 # Main script execution starts here
 request_sudo_privileges

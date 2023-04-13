@@ -2,8 +2,13 @@
 # Usage:
 # $> cnra myapp 7.0.0 --minimal --database=postgresql
 #
-cnra ()
-{
+function cnra() {
+  # validate input
+  if [ $# -lt 2 ]; then
+    echo "Usage: cnra <project_name> <rails_version>"
+    return 1
+  fi
+
   # create dir, dive into dir, require desired Rails version
   mkdir -p -- "$1" && cd -P -- "$1"
   echo "source 'https://rubygems.org'" > Gemfile
@@ -34,6 +39,6 @@ cnra ()
 }
 
 # https://www.bootrails.com/blog/how-to-create-tons-rails-applications/
-cnra7mp() {
+function cnra7mp() {
   cnra myapp 7.0.0 --minimal --database=postgresql --skip-test
 }

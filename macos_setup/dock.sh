@@ -1,30 +1,40 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# Enable auto hide.
-defaults write com.apple.dock autohide -bool true
-
-# Hide process indicators.
-defaults write com.apple.dock show-process-indicators -bool false
-
-# Set orientation.
+# System Preferences > Dock > "Position on screen"
 defaults write com.apple.dock orientation -string left
 
-# Don't show recent applications.
+# System Preferences > Dock > Size:
+defaults write com.apple.dock tilesize -int 64
+
+# System Preferences > Dock > Magnification:
+defaults write com.apple.dock magnification -bool false
+
+# System Preferences > Dock > Automatically hide and show the Dock
+defaults write com.apple.dock autohide -bool true
+
+# System Preferences > Dock > Automatically hide and show the Dock (duration)
+defaults write com.apple.dock autohide-time-modifier -int 0
+
+# System Preferences > Dock > Automatically hide and show the Dock (delay)
+defaults write com.apple.dock autohide-delay -int 0
+
+# System Preferences > Dock > Show indicators for open applications
+defaults write com.apple.dock show-process-indicators -bool true
+
+# System Preferences > Dock > Minimize windows using: Scale effect
+defaults write com.apple.dock mineffect -string "scale"
+
+# Minimize windows into their application’s icon
+defaults write com.apple.dock minimize-to-application -bool true
+
+# Make Dock icons of hidden applications translucent
+defaults write com.apple.dock showhidden -bool true
+
+# System Preferences > Dock > "Show recent applications in Dock"
 defaults write com.apple.dock show-recents -bool false
 
-# Show only active applications.
-defaults write com.apple.dock static-only -bool true
+# System Preferences > Mission Control > Automatically rearrange Spaces based on most recent use
+defaults write com.apple.dock mru-spaces -bool false
 
-# Clear persistent applications.
-defaults write com.apple.dock persistent-apps -array
-defaults write com.apple.dock persistent-others -array
-defaults write com.apple.dock recent-apps -array
-
-# Change Dock size.
-defaults write com.apple.dock tilesize -float 44
-
-# Lock Dock size.
-defaults write com.apple.Dock size-immutable -bool true
-
-# Restart Dock.app.
+# Restart Dock.app
 killall Dock
