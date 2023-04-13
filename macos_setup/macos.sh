@@ -1,132 +1,148 @@
 #!/usr/bin/env bash
 
-# Close any open System Preferences panes, to prevent them from overriding
-# settings we’re about to change
+# Close any open System Preferences panes, to prevent them from overriding settings we’re about to change
 osascript -e 'tell application "System Preferences" to quit'
 
 source "$(dirname "$0")/../bootstrap_functions.sh"
+source "$(dirname "$0")/macOS_functions.sh"
 
 request_sudo_privileges
-
-################################################################################
-# General UI/UX                                                                #
-################################################################################
-
-function set_mac_name() {
-  printf "Please enter the desired name for your Mac: "
-  read mac_name
-
-  if [[ -z "${mac_name}" ]]; then
-    echo "No input provided. No changes were made."
-    exit 0
-  fi
-
-  sanitized_mac_name=$(echo -n "${mac_name}" | tr -dc '[:alnum:][:space:]' | tr '[:upper:]' '[:lower:]' | tr '[:space:]' '-')
-  sanitized_mac_netbios_name=$(echo -n "${mac_name}" | tr -dc '[:alnum:]' | tr '[:lower:]' '[:upper:]' | cut -c 1-15)
-
-  echo "You are about to set the following names:"
-  echo "ComputerName: ${mac_name}"
-  echo "HostName: ${sanitized_mac_name}"
-  echo "LocalHostName: ${sanitized_mac_name}"
-  echo "PlistHostName: ${sanitized_mac_name}"
-  echo "NetBIOSName: ${sanitized_mac_netbios_name}"
-
-  echo "Do you want to proceed? (y/n): "
-  read -n 1 confirmation
-
-  if [[ "${confirmation}" =~ [Nn] ]]; then
-    echo
-    echo "Operation cancelled. No changes were made."
-    exit 0
-  fi
-
-  if sudo scutil --set ComputerName "${mac_name}" &&
-     sudo scutil --set HostName "${sanitized_mac_name}" &&
-     sudo scutil --set LocalHostName "${sanitized_mac_name}" &&
-     sudo defaults write /Library/Preferences/SystemConfiguration/preferences.plist PlistHostName -string "${sanitized_mac_name}"; then
-     sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "${sanitized_mac_netbios_name}" &&
-     echo
-     echo "Successfully set names."
-  else
-    echo "An error occurred. Some names might not have been updated."
-    exit 1
-  fi
-}
-
 set_mac_name
 
-source "$(dirname "$0")/dock.sh"
-source "$(dirname "$0")/finder.sh"
-source "$(dirname "$0")/keyboard.sh"
-
-###############################################################################
-# System Preferences > Appearance > Appearance
-defaults write NSGlobalDomain AppleInterfaceStyleSwitchesAutomatically -bool true
-
-# System Preferences > Appearance > Click in the scrollbar to: Jump to the spot that's clicked
-defaults write NSGlobalDomain AppleScrollerPagingBehavior -bool true
-
-# System Preferences > General > Sidebar icon size: Large
-defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 3
-
-# # Expand save panel by default
-# defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
-# # defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true # not a default key in MacOS
-
-# # Expand print panel by default
-# defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
-# # defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true # not a default key in MacOS
+################################################################################
 
 # Disable the “Are you sure you want to open this application?” dialog
 defaults write com.apple.LaunchServices LSQuarantine -bool false
 
-# # Automatically quit printer app once the print jobs complete
-# defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
-
-# Disable machine sleep while charging
-sudo pmset -c sleep 0
-
-# Set machine sleep to 5 minutes on battery
-sudo pmset -b sleep 5
-
 # Prevent Time Machine from prompting to use new hard drives as backup volume
 defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
-
-# Enable the automatic update check
-defaults write com.apple.SoftwareUpdate AutomaticCheckEnabled -bool true
 
 # Check for software updates daily, not just once per week
 defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
 
-# Download newly available updates in background
-defaults write com.apple.SoftwareUpdate AutomaticDownload -int 1
+################################################################################
+# Dock
+################################################################################
+# System Preferences > Desktop & Dock > Dock > Size:
+defaults write com.apple.dock tilesize -int 64
 
-# Install System data files & security updates
-defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1
+# System Preferences > Desktop & Dock > Dock > Magnification:
+defaults write com.apple.dock magnification -bool false
 
-# Turn on app auto-update
-defaults write com.apple.commerce AutoUpdate -bool true
+# System Preferences > Desktop & Dock > Dock > Position on screen:
+defaults write com.apple.dock orientation -string left
 
-# Allow the App Store to reboot machine on macOS updates
-defaults write com.apple.commerce AutoUpdateRestartRequired -bool true
+# System Preferences > Desktop & Dock > Dock > Minimise windows using:
+defaults write com.apple.dock mineffect -string "scale"
 
-###############################################################################
-# Safari                                                                      #
-###############################################################################
+# System Preferences > Desktop & Dock > Dock > Minimise windows into application icon:
+defaults write com.apple.dock minimize-to-application -bool true
 
-# Show the full URL in the address bar (note: this still hides the scheme)
-defaults write com.apple.Safari ShowFullURLInSmartSearchField -bool true
+# System Preferences > Desktop & Dock > Dock > Automatically hide and show the Dock:
+defaults write com.apple.dock autohide -bool true
 
-# Prevent Safari from opening ‘safe’ files automatically after downloading
-defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
+# System Preferences > Desktop & Dock > Dock > Automatically hide and show the Dock (duration)
+defaults write com.apple.dock autohide-time-modifier -int 0
 
-# Hide Safari’s bookmarks bar by default
-defaults write com.apple.Safari ShowFavoritesBar -bool true
+# System Preferences > Desktop & Dock > Dock > Automatically hide and show the Dock (delay)
+defaults write com.apple.dock autohide-delay -int 0
 
-# Enable the Develop menu and the Web Inspector in Safari
-defaults write com.apple.Safari IncludeDevelopMenu -bool true
-defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
-defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
+# System Preferences > Desktop & Dock > Dock > Animate opening applications:
+defaults write com.apple.dock launchanim -bool false
+
+# System Preferences > Desktop & Dock > Dock > Show indicators for open applications:
+defaults write com.apple.dock show-process-indicators -bool true
+
+# System Preferences > Desktop & Dock > Dock > Show recent applications in Dock
+defaults write com.apple.dock show-recents -bool false
+
+# Make Dock icons of hidden applications translucent
+defaults write com.apple.dock showhidden -bool true
+
+# System Preferences > Desktop & Dock > Mission Control > Automatically rearrange Spaces based on most recent use
+defaults write com.apple.dock mru-spaces -bool false
+
+# Restart Dock.app
+killall Dock
+
+################################################################################
+# Finder
+################################################################################
+# Finder > Settings > General > Show these items on the desktop:
+defaults write com.apple.finder ShowHardDrivesOnDesktop -bool false
+defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool false
+defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool false
+defaults write com.apple.finder ShowMountedServersOnDesktop -bool false
+
+# Finder > Settings > General > New Finder windows show:
+defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/"
+
+# Finder > Settings > Advanced > Show all filename extensions
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+# Finder > Settings > Advanced > Show warning before changing an extension
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+
+# Finder > Settings > Advanced > Show warning before removing from iCloud Drive
+defaults write com.apple.finder FXEnableRemoveFromICloudDriveWarning -bool false
+
+# Finder > Settings > Advanced > Show warning before emptying the Bin
+defaults write com.apple.finder WarnOnEmptyTrash -bool false
+
+# Empty Trash securely by default
+defaults write com.apple.finder EmptyTrashSecurely -bool true
+
+# Finder > Settings > Advanced > Remove items from the Bin after 30 days
+defaults write com.apple.finder FXRemoveOldTrashItems -bool true
+
+# Finder > Settings > Advanced > Keep folders on top > In windows when sorting by name
+defaults write com.apple.finder _FXSortFoldersFirst -bool true
+
+# Finder > Settings > Advanced > When performing a search
+defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+
+# Finder > View > As List
+# Four-letter codes for the other view modes: `icnv`, `clmv`, `glyv`, `Nlsv`
+defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
+
+# Finder > View > Show Path Bar
+defaults write com.apple.finder ShowPathbar -bool true
+
+# Finder > View > Show Status Bar
+defaults write com.apple.finder ShowStatusBar -bool true
+
+# Avoid creating .DS_Store files on network or USB volumes
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+
+# Restart Finder.app
+killall Finder
+
+################################################################################
+# Keyboard
+################################################################################
+# System Preferences > Keyboard > "Key repeat rate"
+defaults write NSGlobalDomain KeyRepeat -int 5
+
+# System Preferences > Keyboard > "Delay until repeat"
+defaults write NSGlobalDomain InitialKeyRepeat -int 100
+
+# Disable press-and-hold for keys in favor of key repeat
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+
+# Disable “natural” (Lion-style) scrolling
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool true
+
+# Disable automatic emoji substitution (i.e. use plain text smileys)
+defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticEmojiSubstitutionEnablediMessage" -bool false
+
+################################################################################
+# Safari
+################################################################################
+# # Enable the Develop menu and the Web Inspector in Safari
+# defaults write com.apple.Safari IncludeDevelopMenu -bool true
+# defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+# defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
 
 # Disable AutoFill
 defaults write com.apple.Safari AutoFillFromAddressBook -bool false
@@ -138,5 +154,6 @@ defaults write com.apple.Safari SendDoNotTrackHTTPHeader -bool true
 
 # Update extensions automatically
 defaults write com.apple.Safari InstallExtensionUpdatesAutomatically -bool true
+
 
 echo "Done. Note that some of these changes require a logout/restart to take effect."
