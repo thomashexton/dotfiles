@@ -122,10 +122,10 @@ killall Finder
 # Keyboard
 ################################################################################
 # System Preferences > Keyboard > "Key repeat rate"
-defaults write NSGlobalDomain KeyRepeat -int 5
+defaults write NSGlobalDomain KeyRepeat -int 2
 
 # System Preferences > Keyboard > "Delay until repeat"
-defaults write NSGlobalDomain InitialKeyRepeat -int 100
+defaults write NSGlobalDomain InitialKeyRepeat -int 10
 
 # Disable press-and-hold for keys in favor of key repeat
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false

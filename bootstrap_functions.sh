@@ -1,5 +1,4 @@
 WORKDIR=$(pwd)
-# REPO_NAME="dotfiles-m1"
 
 
 # Asks for the administrator password upfront
@@ -80,9 +79,38 @@ function install_homebrew() {
 
 
 # Installs packages and apps from Brewfile
+function install_from_brewfile() {
+  local BREWFILE=$1
+  if [ ! -f "dependencies/$BREWFILE" ]; then
+    echo "$BREWFILE not found in dependencies folder. Please check your files and try again."
+    return 1
+  fi
+  echo "Installing packages and apps with Homebrew from $BREWFILE..."
+  brew bundle --file="dependencies/$BREWFILE" --no-lock --no-upgrade
+}
+
+
+# Installs packages and apps from Brewfile
 function install_homebrew_packages_and_apps() {
-  echo "Installing packages and apps with Homebrew..."
-  brew bundle --file=dependencies/Brewfile --no-lock --no-upgrade
+  echo "Tapping common repos and installing common packages..."
+  install_from_brewfile "Brewfile"
+
+  echo -n "Please enter 'h' for home or 'w' for work: "
+  if read -t 5 -n 1 choice; then
+    echo
+    if [[ ${choice} =~ [HhWw] ]]; then
+      if [[ ${choice} =~ [Hh] ]]; then
+        install_from_brewfile "Brewfile_home"
+      else
+        install_from_brewfile "Brewfile_work"
+      fi
+    else
+      echo "Invalid choice. Please enter either 'h' or 'w'."
+    fi
+  else
+    echo
+    echo "Timeout reached. You didn't choose a 'home' or 'work' Brewfile, so only common packages were installed."
+  fi
 }
 
 
@@ -134,9 +162,8 @@ function install_powerlevel10k() {
 function link_custom_configs() {
   # Prompt user if they use Mackup to backup secrets
   echo -n "Do you use Mackup to backup your secrets? (y/n): "
-  if read -t 3 -n 1 use_mackup; then
+  if read -t 5 -n 1 use_mackup; then
     echo
-
     if [[ "${use_mackup}" =~ [Nn] ]]; then
       # Create custom .zsh file for secrets if not using Mackup
       touch custom/secret.zsh
@@ -160,7 +187,7 @@ function link_custom_configs() {
   ln -sf "${WORKDIR}/ssh/config" "${HOME}/.ssh/config"
 
   # Link ${HOME} dotfiles
-  # TODO: consider how to confirm to XDG file structure
+  # TODO: consider how to conform to XDG file structure
   echo "Linking files to home directory..."
   for file in sym-links/*; do
     if [[ ! -d "${file}" ]]; then
