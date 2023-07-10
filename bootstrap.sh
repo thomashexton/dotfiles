@@ -16,7 +16,7 @@
 # Usage: Run the script with ./bootstrap.sh
 #
 # Notes:
-#  - This script requires a Mac using Intel CPU or Apple Silicon.
+#  - This script requires a Mac using Apple Silicon.
 #  - This script should be run with administrator privileges.
 #  - This script is opinionated and tailored to the author's preferences.
 #
@@ -39,6 +39,7 @@ source "$(dirname "$0")/bootstrap_functions.sh"
 
 # Main script execution starts here
 request_sudo_privileges
+# install_rosetta
 install_homebrew
 install_homebrew_packages_and_apps
 install_oh_my_zsh
