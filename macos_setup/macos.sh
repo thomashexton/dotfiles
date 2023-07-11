@@ -4,7 +4,7 @@
 osascript -e 'tell application "System Preferences" to quit'
 
 source "$(dirname "$0")/../bootstrap_functions.sh"
-source "$(dirname "$0")/macOS_functions.sh"
+source "$(dirname "$0")/macos_functions.sh"
 
 request_sudo_privileges
 set_mac_name
