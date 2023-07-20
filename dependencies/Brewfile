@@ -24,7 +24,6 @@ brew "z"
 
 
 ## Casks (GUI)
-cask "font-jetbrains-mono"
 cask "font-sf-mono-nerd-font"
 cask "karabiner-elements"
 cask "linearmouse"
