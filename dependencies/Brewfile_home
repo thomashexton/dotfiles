@@ -7,6 +7,7 @@ brew "mas"
 brew "postgresql@15"
 brew "redis"
 
+
 ## Casks (GUI)
 cask "1password" # mas doesn't have v8 yet
 # cask "authy"
@@ -36,6 +37,7 @@ cask "sonos"
 # cask "spotify"
 cask "tableplus"
 cask "visual-studio-code"
+
 
 ## Mac App Store Apps
 # mas "Affinity Designer", id: 824171161

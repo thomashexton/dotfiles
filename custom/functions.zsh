@@ -42,3 +42,22 @@ function cnra() {
 function cnra7mp() {
   cnra myapp 7.0.0 --minimal --database=postgresql --skip-test
 }
+
+print_wattage() {
+  while true
+  do
+    local wattage=$(/usr/sbin/system_profiler SPPowerDataType | grep -E 'Wattage \(W\): (.*)' 2>/dev/null | awk '{print $3}')
+    if [[ -z "${wattage}" ]]; then
+      echo "no charger connected"
+    else
+      echo "current wattage: ${wattage}W"
+    fi
+    sleep 1
+  done
+}
+
+get_yabai_window_app_name() {
+  result=$(sleep $1 && yabai -m query --windows --window)
+  app=$(echo "$result" | jq -r '.app')
+  echo "\"app\":\"$app\""
+}
