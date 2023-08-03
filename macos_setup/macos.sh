@@ -4,10 +4,11 @@
 osascript -e 'tell application "System Preferences" to quit'
 
 source "$(dirname "$0")/../bootstrap_functions.sh"
-source "$(dirname "$0")/macOS_functions.sh"
+source "$(dirname "$0")/macos_functions.sh"
 
 request_sudo_privileges
 set_mac_name
+
 
 ################################################################################
 
@@ -19,6 +20,7 @@ defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 
 # Check for software updates daily, not just once per week
 defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
+
 
 ################################################################################
 # Dock
@@ -64,6 +66,7 @@ defaults write com.apple.dock mru-spaces -bool false
 
 # Restart Dock.app
 killall Dock
+
 
 ################################################################################
 # Finder
@@ -118,6 +121,7 @@ defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 # Restart Finder.app
 killall Finder
 
+
 ################################################################################
 # Keyboard
 ################################################################################
@@ -135,6 +139,7 @@ defaults write NSGlobalDomain com.apple.swipescrolldirection -bool true
 
 # Disable automatic emoji substitution (i.e. use plain text smileys)
 defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticEmojiSubstitutionEnablediMessage" -bool false
+
 
 ################################################################################
 # Safari
@@ -154,6 +159,5 @@ defaults write com.apple.Safari SendDoNotTrackHTTPHeader -bool true
 
 # Update extensions automatically
 defaults write com.apple.Safari InstallExtensionUpdatesAutomatically -bool true
-
 
 echo "Done. Note that some of these changes require a logout/restart to take effect."

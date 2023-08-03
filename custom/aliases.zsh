@@ -1,15 +1,15 @@
 # iCloud dir
 alias ic="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs"
 
-alias e="$EDITOR"
-alias ve="$VISUAL_EDITOR"
+alias e="${EDITOR}"
+alias ve="${VISUAL_EDITOR}"
 
 # Use nvim instead of vim/vi
 alias vim="nvim"
 alias vi="nvim"
 
 # Quick open files
-alias hosts="sudo $VISUAL_EDITOR /etc/hosts"
+alias hosts="sudo ${VISUAL_EDITOR} /etc/hosts"
 alias yab="nvim ~/.yabairc"
 alias skh="nvim ~/.skhdrc"
 

@@ -51,6 +51,11 @@ yabai -m rule --add app="^Superkey$" manage=off
 yabai -m rule --add app="^Karabiner-EventViewer$" manage=off
 # yabai -m rule --add app="^Logi Options\+$" manage=off
 yabai -m ryle --add app="^Playwright Inspector$" manage=off
+yabai -m rule --add app="^Linear Mouse$" manage=off
+yabai -m rule --add app="^Lunar$" manage=off
+yabai -m rule --add app="^Logi Options\+$" manage=off
+yabai -m rule --add app="^MacGPT$" manage=off
+yabai -m rule --add app="Preferences$" manage=off
 yabai -m rule --add app="^System Information$" manage=off
 yabai -m rule --add app="^System Settings$" manage=off
 

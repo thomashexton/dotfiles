@@ -39,6 +39,7 @@ source "$(dirname "$0")/bootstrap_functions.sh"
 
 # Main script execution starts here
 request_sudo_privileges
+# install_rosetta
 install_homebrew
 install_homebrew_packages_and_apps
 install_oh_my_zsh
