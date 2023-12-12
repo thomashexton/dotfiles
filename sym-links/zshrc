@@ -22,5 +22,13 @@ source $ZSH/oh-my-zsh.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-if [ -e /Users/thomashexton/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/thomashexton/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+# Nix
+if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+  . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+fi
+# End Nix
+
 export PATH="/Users/thomashexton/.config/bin:$PATH"
+
+# eval "$(starship init zsh)"

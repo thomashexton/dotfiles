@@ -10,12 +10,14 @@ alias vi="nvim"
 
 # Quick open files
 alias hosts="sudo ${VISUAL_EDITOR} /etc/hosts"
-alias yab="nvim ~/.yabairc"
-alias skh="nvim ~/.skhdrc"
+alias yabf="nvim ~/.yabairc"
+alias skhf="nvim ~/.skhdrc"
 
 # Yabai & SKHD
 alias yabsto="yabai --stop-service"
 alias yabsta="yabai --start-service"
+alias yabres="yabsto && yabsta"
+alias gywan='get_yabai_window_app_name'
 
 # Show the weather
 alias wx="curl v2.wttr.in"
@@ -25,4 +27,7 @@ alias pubip="curl -s ipv4.icanhazip.com | tee >(pbcopy)"
 
 # Copy my public SSH rsa to clipboard
 alias pubssh="pbcopy < ~/.ssh/personal_laptop_ed25519.pub"
-alias gywan='get_yabai_window_app_name'
+
+# Git additions
+alias gcog="git checkout green"
+alias gcom="git checkout master"

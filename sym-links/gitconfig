@@ -22,3 +22,7 @@
 	version = 2
 [maintenance]
 	repo = /Users/thomashexton/work/canva
+[diff]
+	external = difft
+[trace2]
+	eventTarget = af_unix:dgram:/tmp/olly-git-trace2.sock

@@ -17,8 +17,8 @@ function request_sudo_privileges() {
 
 # Installs Rosetta if not already installed and user agrees
 function install_rosetta() {
-  local rosetta_status=$(sysctl sysctl.proc_translated)
-  if [[ ${rosetta_status} == "sysctl.proc_translated: 1" ]]; then
+  # Check for the existence of the Rosetta launch daemon plist file
+  if [[ -f "/Library/Apple/System/Library/LaunchDaemons/com.apple.oahd.plist" ]]; then
     echo "Rosetta is already installed."
   else
     echo -n "Rosetta is not installed. Do you want to install it now? (y/n): "
@@ -160,6 +160,8 @@ function install_powerlevel10k() {
 
 
 function link_custom_configs() {
+  export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+
   # Prompt user if they use Mackup to backup secrets
   echo -n "Do you use Mackup to backup your secrets? (y/n): "
   if read -t 5 -n 1 use_mackup; then

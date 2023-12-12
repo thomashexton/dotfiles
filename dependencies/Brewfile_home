@@ -1,4 +1,4 @@
-## CLI
+# CLI
 # Extendable version manager with support for Ruby, Node.js, Erlang & more
 brew "asdf"
 # Mac App Store command-line interface
@@ -8,11 +8,11 @@ brew "postgresql@15"
 brew "redis"
 
 
-## Casks (GUI)
+# Casks (GUI)
 cask "1password" # mas doesn't have v8 yet
 # cask "authy"
 # cask "battle-net"
-cask "brave-browser"
+# cask "brave-browser"
 cask "docker"
 cask "dropbox"
 cask "firefox"
@@ -35,7 +35,7 @@ cask "sonos"
 # cask "sony-ps-remote-play"
 # cask "spacelauncher"
 # cask "spotify"
-cask "tableplus"
+# cask "tableplus"
 cask "visual-studio-code"
 
 
