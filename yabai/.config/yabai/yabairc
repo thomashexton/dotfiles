@@ -1,0 +1,149 @@
+#!/usr/bin/env sh
+
+# System-level configurations
+# *yabai --load-sa* is configured to run through sudo without a password
+# sudo yabai --load-sa
+# yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+
+# Global settings
+yabai -m config window_origin_display      default
+yabai -m config window_placement           second_child
+yabai -m config window_topmost             off
+yabai -m config window_shadow              off
+yabai -m config window_opacity             off
+yabai -m config window_opacity_duration    0.0
+yabai -m config active_window_opacity      1.0
+yabai -m config normal_window_opacity      0.90
+yabai -m config window_border              off
+yabai -m config window_border_width        2
+yabai -m config active_window_border_color 0xffff7900
+yabai -m config normal_window_border_color 0xff555555
+yabai -m config insert_feedback_color      0xffd75f5f
+yabai -m config split_ratio                0.50
+yabai -m config auto_balance               off
+
+# General space settings
+yabai -m config layout                     bsp
+yabai -m config top_padding                0
+yabai -m config bottom_padding             0
+yabai -m config left_padding               0
+yabai -m config right_padding              0
+yabai -m config window_gap                 0
+
+# Mouse settings
+yabai -m config mouse_follows_focus        off
+yabai -m config focus_follows_mouse        off
+yabai -m config mouse_modifier             fn
+yabai -m config mouse_action1              move
+yabai -m config mouse_action2              resize
+yabai -m config mouse_drop_action          swap
+
+# Apps not to manage
+yabai -m rule --add app="^1Password$" manage=off
+yabai -m rule --add app="^Activity Monitor$" manage=off
+yabai -m rule --add app="^App Store$" manage=off
+yabai -m rule --add app="^Archive Utility$" manage=off
+yabai -m rule --add app="^Battle.net$" manage=off
+yabai -m rule --add app="^Chromium$" manage=off
+yabai -m rule --add app="^coreautha$" title="^1Password$" manage=off
+yabai -m rule --add app="^FaceTime$" manage=off
+yabai -m rule --add app="^Installer$" manage=off
+yabai -m rule --add app="^JetBrains Toolbox$" manage=off
+yabai -m rule --add app="^Karabiner-Elements$" manage=off
+yabai -m rule --add app="^Karabiner-EventViewer$" manage=off
+yabai -m rule --add app="^LinearMouse$" manage=off
+yabai -m rule --add app="^Logi Options+$" manage=off
+yabai -m rule --add app="^Lunar$" manage=off
+yabai -m rule --add app="^Nudge$" manage=off
+yabai -m rule --add app="^Preferences$" manage=off
+yabai -m rule --add app="^Self Service$" manage=off
+yabai -m rule --add app="^Superkey$" manage=off
+yabai -m rule --add app="^System Information$" manage=off
+yabai -m rule --add app="^System Settings$" manage=off
+
+# Specific app settings
+# app_arc_settings
+yabai -m rule --add app="^Arc$" title="^Advanced$" manage=off
+yabai -m rule --add app="^Arc$" title="^General$" manage=off
+yabai -m rule --add app="^Arc$" title="^Links$" manage=off
+yabai -m rule --add app="^Arc$" title="^Shortcuts$" manage=off
+yabai -m rule --add app="^Arc$" title="^Thomas$" manage=off
+
+# app_craft_settings
+yabai -m rule --add app="^Craft$" title="^Settings$" manage=off
+
+# app_intellij_idea_settings
+yabai -m rule --add app="^IntelliJ IDEA$" title="^Delete$" manage=off
+yabai -m rule --add app="^IntelliJ IDEA$" title="^Push Commits to" manage=off
+yabai -m rule --add app="^IntelliJ IDEA$" title="^Rename$" manage=off
+yabai -m rule --add app="^IntelliJ IDEA$" title="^Rollback Changes$" manage=off
+yabai -m rule --add app="^IntelliJ IDEA$" title="^Settings$" manage=off
+yabai -m rule --add app="^IntelliJ IDEA$" title="^Keyboard Shortcut$" manage=off
+yabai -m rule --add app="^IntelliJ IDEA$" title="^Copy$" manage=off
+yabai -m rule --add app="^IntelliJ IDEA$" title="^Go to Line:Column$" manage=off
+yabai -m rule --add app="^IntelliJ IDEA$" title="^Rename Bookmark List$" manage=off
+
+# app_nova_settings
+yabai -m rule --add app="^Nova$" title="^Behaviours$" manage=off
+yabai -m rule --add app="^Nova$" title="^Editor$" manage=off
+yabai -m rule --add app="^Nova$" title="^Files$" manage=off
+yabai -m rule --add app="^Nova$" title="^Git$" manage=off
+yabai -m rule --add app="^Nova$" title="^Git Accounts$" manage=off
+yabai -m rule --add app="^Nova$" title="^Key Bindings$" manage=off
+yabai -m rule --add app="^Nova$" title="^Keys$" manage=off
+yabai -m rule --add app="^Nova$" title="^Servers$" manage=off
+yabai -m rule --add app="^Nova$" title="^Settings$" manage=off
+yabai -m rule --add app="^Nova$" title="^Sync$" manage=off
+yabai -m rule --add app="^Nova$" title="^Terminal$" manage=off
+yabai -m rule --add app="^Nova$" title="^Theme$" manage=off
+yabai -m rule --add app="^Nova$" title="^Tools$" manage=off
+yabai -m rule --add app="^Nova$" title="^Transfers$" manage=off
+yabai -m rule --add app="^Nova$" title="^Workspace$" manage=off
+
+# app_orion_settings
+yabai -m rule --add app="^Orion$" title="^Advanced$" manage=off
+yabai -m rule --add app="^Orion$" title="^Appearance$" manage=off
+yabai -m rule --add app="^Orion$" title="^Browsing$" manage=off
+yabai -m rule --add app="^Orion$" title="^General$" manage=off
+yabai -m rule --add app="^Orion$" title="^Passwords$" manage=off
+yabai -m rule --add app="^Orion$" title="^Privacy$" manage=off
+yabai -m rule --add app="^Orion$" title="^Search$" manage=off
+yabai -m rule --add app="^Orion$" title="^Sync$" manage=off
+yabai -m rule --add app="^Orion$" title="^Websites$" manage=off
+
+# app_safari_settings
+yabai -m rule --add app="^Safari$" title="^Advanced$" manage=off
+yabai -m rule --add app="^Safari$" title="^AutoFill$" manage=off
+yabai -m rule --add app="^Safari$" title="^Extensions$" manage=off
+yabai -m rule --add app="^Safari$" title="^General$" manage=off
+yabai -m rule --add app="^Safari$" title="^Passwords$" manage=off
+yabai -m rule --add app="^Safari$" title="^Privacy$" manage=off
+yabai -m rule --add app="^Safari$" title="^Search$" manage=off
+yabai -m rule --add app="^Safari$" title="^Security$" manage=off
+yabai -m rule --add app="^Safari$" title="^Tabs$" manage=off
+yabai -m rule --add app="^Safari$" title="^Websites$" manage=off
+
+# steam
+yabai -m rule --add app="^Steam Helper$" title="^Special Offers$" manage=off
+yabai -m rule --add app="^Steam Helper$" title="^Friends List$" manage=off
+yabai -m rule --add app="^Steam Helper$" title="^Steam$" manage=off
+yabai -m rule --add app="^Steam Helper$" title="^Steam Settings$" manage=off
+yabai -m rule --add app="^Steam Helper$" title="^Borderlands 2 Controller Layout$" manage=off
+yabai -m rule --add app="^Steam Helper$" manage=off
+
+# kap
+yabai -m rule --add app="^Kap$" manage=off
+
+# klack
+yabai -m rule --add app="^Klack$" manage=off
+
+# app_zed_settings
+yabai -m rule --add app="^Zed$" title="^Open$" manage=off
+
+# rode_unify_settings
+yabai -m rule --add app="^RODE UNIFY$" manage=off
+
+# rode_unify_settings
+yabai -m rule --add app="^RODE Central$" manage=off
+
+echo "yabai configuration loaded..."

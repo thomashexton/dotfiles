@@ -1,0 +1,13 @@
+zmodule asciiship
+zmodule environment
+zmodule git
+zmodule git-info
+zmodule input
+zmodule magic-enter
+zmodule utility
+zmodule zsh-users/zsh-autosuggestions
+zmodule zsh-users/zsh-completions
+zmodule zsh-users/zsh-history-substring-search
+zmodule zsh-users/zsh-syntax-highlighting
+
+zmodule https://github.com/agkozak/zsh-z

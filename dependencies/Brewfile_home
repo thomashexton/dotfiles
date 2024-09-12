@@ -1,0 +1,60 @@
+# CLI
+# brew "asdf"
+brew "mas" # Mac App Store command-line interface
+# brew "postgresql@15"
+# brew "redis"
+
+
+# Casks (GUI)
+cask "1password" # mas doesn't have v8 yet
+# cask "authy"
+# cask "battle-net"
+# cask "brave-browser"
+cask "docker"
+cask "dropbox"
+cask "firefox"
+cask "font-sf-mono-nerd-font"
+# cask "font-fira-code-nerd-font"
+# cask "font-jetbrains-mono"
+# cask "google-chrome"
+# cask "google-cloud-sdk"
+cask "gpg-suite-no-mail" # needed for asdf node install?
+# cask "insomnia"
+# cask "iterm2"
+cask "karabiner-elements"
+# cask "logitech-options" # cask version is not the latest "+" variant
+cask "linearmouse"
+# cask "lunar" // monitor control software
+cask "notion"
+cask "raycast"
+# cask "shortcat"
+cask "signal"
+# cask "slack"
+cask "sonos"
+# cask "sony-ps-remote-play"
+# cask "spacelauncher"
+# cask "spotify"
+# cask "superkey"
+# cask "tableplus"
+cask "visual-studio-code"
+
+
+## Mac App Store Apps
+# mas "Affinity Designer", id: 824171161
+# mas "Affinity Photo", id: 824183456
+# mas "Affinity Publisher", id: 881418622
+# mas "Amphetamine", id: 937984704
+# mas "Compressor", id: 424390742
+# mas "Disk Speed Test", id: 425264550
+# mas "Divvy", id: 413857545
+# mas "Final Cut Pro", id: 424389933
+# mas "Keynote", id: 409183694
+# mas "Motion", id: 434290957
+# mas "Newton", id: 1059655371
+# mas "Numbers", id: 409203825
+# mas "Pages", id: 409201541
+mas "Parcel", id: 639968404
+# mas "Session", id: 1521432881
+# mas "ToothFairy", id: 1191449274
+# mas "WireGuard", id: 1451685025
+# mas "Xcode", id: 497799835
