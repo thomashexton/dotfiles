@@ -1,0 +1,125 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run the `open default settings` command
+// from the command palette or from `Zed` application menu.
+{
+  // THEME
+  "theme": "One Dark",
+
+
+  // FONTS
+  "buffer_font_family": "MonoLisa Nerd Font",
+  "buffer_font_features": {
+    // Enable ligatures:
+    "calt": true
+  },
+  "buffer_line_height": "comfortable",
+
+  // 42" 4k
+  "buffer_font_size": 16,
+  "ui_font_size": 16,
+
+  // // 27" 2880p && 1440p
+  // "buffer_font_size": 16,
+  // "ui_font_size": 16, // ui font size
+
+  // Assistant Chat
+  "assistant": {
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-4o"
+    },
+    "version": "2",
+    "default_width": 960, // 2k monitor w/ left/right
+    // "default_width": 540, // 2k monitor w/ left/right
+  },
+
+  // MISC
+  "features": {
+    // Show Copilot icon in status bar
+    "inline_completion_provider": "copilot",
+    "copilot": true
+  },
+  "project_panel": {
+    // Default width of the project panel.
+    // "default_width": 1280, // 4k monitor
+    // "default_width": 960, // 4k monitor opt 2
+    // "default_width": 640, // 5k monitor
+    // "default_width": 853, // 2k monitor
+    "default_width": 540, // 2k monitor w/ left/right
+    // Amount of indentation for nested items.
+    "indent_size": 24
+  },
+  "collaboration_panel": {
+    // Whether to show the collaboration panel button in the status bar.
+    "button": false
+  },
+  "chat_panel": {
+    // Whether to show the collaboration panel button in the status bar.
+    "button": false
+  },
+  "notification_panel": {
+    // Whether to show the collaboration panel button in the status bar.
+    "button": true,
+    // Where to dock channels panel. Can be 'left' or 'right'.
+    "dock": "right",
+    // Default width of the channels panel.
+    "default_width": 380
+  },
+  "telemetry": {
+    // Send debug info like crash reports.
+    "diagnostics": true,
+    // Send anonymized usage data like what languages you're using Zed with.
+    "metrics": true
+  },
+  "outline_panel": {
+    // "default_width": 960, // 4k monitor opt 2
+    // "default_width": 853, // 2k monitor
+    "default_width": 540, // 2k monitor w/ left/right
+  },
+
+
+  // FORMATTING
+  // How to perform a buffer format. This setting can take 4 values:
+  //
+  // 1. Format code using the current language server:
+  //     "formatter": "language_server"
+  // 2. Format code using an external command:
+  //     "formatter": {
+  //       "external": {
+  //         "command": "prettier",
+  //         "arguments": ["--stdin-filepath", "{buffer_path}"]
+  //       }
+  //     }
+  // 3. Format code using Zed's Prettier integration:
+  //     "formatter": "prettier"
+  // 4. Default. Format files using Zed's Prettier integration (if applicable),
+  //    or falling back to formatting via language server:
+  //     "formatter": "auto"
+  "format_on_save": "off",
+  "formatter": {
+    "external": {
+      "command": "/Users/thomashexton/work/employer/tools/dprint/dprint",
+      "arguments": ["fmt", "--", "${buffer_path}"]
+    }
+  },
+
+
+  // LANGUAGES
+  "languages": {
+    "TypeScript": {
+      "code_actions_on_format": {
+        "source.organizeImports": true
+      }
+    },
+    "TSX": {
+      "code_actions_on_format": {
+        "source.organizeImports": true
+      }
+    }
+  }
+}

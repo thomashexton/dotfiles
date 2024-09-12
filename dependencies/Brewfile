@@ -1,0 +1,27 @@
+tap "homebrew/cask-fonts"
+tap "homebrew/services"
+
+
+tap "epk/epk" # SF Mono Nerd Font
+tap "koekeishiya/formulae" # skhd & yabai
+
+
+## CLI
+# GitHub's own specific CLI
+brew "gh"
+# Distributed revision control system
+brew "git"
+# A better git diff, used in `~/.config/git/config`
+brew "diff-so-fancy"
+# Keep your Mac's application settings in sync
+brew "stow"
+# NeoVim, get on it
+brew "neovim"
+# Window manager for macOS
+brew "aerospace"
+
+
+## Casks (GUI)
+cask "font-sf-mono-nerd-font"
+cask "karabiner-elements"
+cask "linearmouse"

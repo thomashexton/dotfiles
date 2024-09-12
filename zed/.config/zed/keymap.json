@@ -1,0 +1,22 @@
+[
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-s": "editor::Fold",
+      "ctrl-f": "editor::UnfoldLines",
+      "ctrl-e": "editor::MoveUp",
+      "ctrl-d": "editor::MoveDown",
+      "ctrl-k": "editor::MoveUp",
+      "ctrl-j": "editor::MoveDown",
+      "ctrl-h": "editor::MoveLeft",
+      "ctrl-l": "editor::MoveRight",
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-alt-shift-h": "editor::SelectToPreviousSubwordStart",
+      "ctrl-alt-shift-l": "editor::SelectToNextSubwordEnd"
+    }
+  }
+]

@@ -1,0 +1,31 @@
+[user]
+	name = Thomas Hexton
+	email = 25544371+thomashexton@users.noreply.github.com
+
+[pager]
+    # insanely beautiful diffs
+    diff = diff-so-fancy | less --tabs=4 -RFX
+    show = diff-so-fancy | less --tabs=4 -RFX
+    branch = false
+
+[push]
+    default = current
+
+[interactive]
+    diffFilter = "diff-so-fancy"
+
+[color]
+    ui = auto
+
+[alias]
+    parent = "!git show-branch | grep '*' | grep -v \"$(git rev-parse --abbrev-ref HEAD)\" | head -n1 | sed 's/.*\\[\\(.*\\)\\].*/\\1/' | sed 's/[\\^~].*//' #"
+[maintenance]
+	repo = /Users/thomashexton/work/process-tooling
+	repo = /Users/thomashexton/work/sarcophagus
+	repo = /Users/thomashexton/work/employer
+	repo = /Users/thomashexton/work/docs
+	repo = /Users/thomashexton/work/thomashexton-dotfiles
+	repo = /Users/thomashexton/work/mobx
+	repo = /Users/thomashexton/work/mobile-tools
+[trace2]
+	eventtarget = af_unix:dgram:/tmp/work-git-trace2.sock
