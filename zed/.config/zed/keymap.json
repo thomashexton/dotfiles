@@ -9,7 +9,7 @@
       "ctrl-k": "editor::MoveUp",
       "ctrl-j": "editor::MoveDown",
       "ctrl-h": "editor::MoveLeft",
-      "ctrl-l": "editor::MoveRight",
+      "ctrl-l": "editor::MoveRight"
     }
   },
   {
