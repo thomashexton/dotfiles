@@ -1,6 +1,6 @@
 # CLI
 brew git-lfs
+brew git-credential-manager
 
 
 # Casks (GUI)
-cask "1password" # mas doesn't have v8 yet

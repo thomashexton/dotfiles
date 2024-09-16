@@ -6,11 +6,10 @@ brew "mas" # Mac App Store command-line interface
 
 
 # Casks (GUI)
-cask "1password" # mas doesn't have v8 yet
 # cask "authy"
 # cask "battle-net"
 # cask "brave-browser"
-cask "docker"
+# cask "docker"
 cask "dropbox"
 cask "firefox"
 cask "font-sf-mono-nerd-font"
@@ -18,7 +17,7 @@ cask "font-sf-mono-nerd-font"
 # cask "font-jetbrains-mono"
 # cask "google-chrome"
 # cask "google-cloud-sdk"
-cask "gpg-suite-no-mail" # needed for asdf node install?
+# cask "gpg-suite-no-mail" # needed for asdf node install?
 # cask "insomnia"
 # cask "iterm2"
 cask "karabiner-elements"
@@ -30,7 +29,7 @@ cask "raycast"
 # cask "shortcat"
 cask "signal"
 # cask "slack"
-cask "sonos"
+# cask "sonos"
 # cask "sony-ps-remote-play"
 # cask "spacelauncher"
 # cask "spotify"
