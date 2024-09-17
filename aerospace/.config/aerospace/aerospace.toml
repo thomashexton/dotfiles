@@ -57,7 +57,7 @@ on-focus-changed = ['move-mouse window-lazy-center']
 # Gaps between windows (inner-*) and between monitor edges (outer-*).
 # Possible values:
 # - Constant:     gaps.outer.top = 8
-# - Per monitor:  gaps.outer.top = [{ monitor.main = 16 }, { monitor."some-pattern" = 32 }, 24]
+# - Per monitor:  gaps.outer.top = [{ monitor.main = 16 }, { monitor.'some-pattern' = 32 }, 24]
 #                 In this example, 24 is a default value when there is no match.
 #                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
 #                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
@@ -78,14 +78,14 @@ outer.right =      10
 # See: https://nikitabobko.github.io/AeroSpace/commands#exec-and-forget
 # You can uncomment the following lines to open up terminal with alt + enter shortcut (like in i3)
 # alt-enter = '''exec-and-forget osascript -e '
-# tell application "Alacritty"
+# tell application 'Alacritty''
 #     do script
 #     activate
 # end tell'
 # '''
 
-cmd-h = [] # Disable "hide application"
-cmd-alt-h = [] # Disable "hide others"
+cmd-h = [] # Disable 'hide application''
+cmd-alt-h = [] # Disable 'hide others''
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
 alt-slash = 'layout tiles horizontal vertical'
@@ -160,3 +160,55 @@ alt-shift-comma = 'mode service'
     alt-shift-j = ['join-with down', 'mode main']
     alt-shift-k = ['join-with up', 'mode main']
     alt-shift-l = ['join-with right', 'mode main']
+
+# Zoom
+[[on-window-detected]]
+    if.app-id = 'us.zoom.xos'
+    run = ['layout floating']
+
+# Kap
+[[on-window-detected]]
+    if.app-id = 'com.wulkano.kap'
+    run = ['layout floating']
+
+# Arc Start Up
+[[on-window-detected]]
+    if.app-id = 'company.thebrowser.Browser'
+    if.during-aerospace-startup = true
+    run = ['move-node-to-workspace 1']
+
+# Alactritty Start Up
+[[on-window-detected]]
+    if.app-id = 'org.alacritty'
+    if.during-aerospace-startup = true
+    run = ['move-node-to-workspace 4']
+
+# Zed Start Up
+[[on-window-detected]]
+    if.app-id = 'dev.zed.Zed'
+    if.during-aerospace-startup = true
+    run = ['move-node-to-workspace 5']
+
+# Slack Start Up
+[[on-window-detected]]
+    if.app-id = 'com.tinyspeck.slackmacgap'
+    if.during-aerospace-startup = true
+    run = ['move-node-to-workspace 7']
+
+# Messages Start Up
+[[on-window-detected]]
+    if.app-id = 'com.apple.MobileSMS'
+    if.during-aerospace-startup = true
+    run = ['move-node-to-workspace 8']
+
+# Apple Music Start Up
+[[on-window-detected]]
+    if.app-id = 'com.apple.Music'
+    if.during-aerospace-startup = true
+    run = ['move-node-to-workspace 9']
+
+# YouTube Music Start Up
+[[on-window-detected]]
+    if.app-id = 'com.github.th-ch.youtube-music'
+    if.during-aerospace-startup = true
+    run = ['move-node-to-workspace 9']
