@@ -34,8 +34,8 @@
       "model": "gpt-4o"
     },
     "version": "2",
-    "default_width": 960, // 2k monitor w/ left/right
-    // "default_width": 540, // 2k monitor w/ left/right
+    "default_width": 960 // 2k monitor w/ left/right
+    // "default_width": 540 // 2k monitor w/ left/right
   },
 
   // MISC
@@ -47,10 +47,10 @@
   "project_panel": {
     // Default width of the project panel.
     // "default_width": 1280, // 4k monitor
-    // "default_width": 960, // 4k monitor opt 2
+    "default_width": 960, // 4k monitor opt 2
     // "default_width": 640, // 5k monitor
     // "default_width": 853, // 2k monitor
-    "default_width": 540, // 2k monitor w/ left/right
+    // "default_width": 380, // 2k monitor w/ left/right
     // Amount of indentation for nested items.
     "indent_size": 24
   },
