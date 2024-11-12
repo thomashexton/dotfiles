@@ -26,9 +26,11 @@
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 
-# Open log file for writing in the XDG cache directory
+# Log file for writing in the XDG cache directory
 LOGFILE="${XDG_CACHE_HOME}/bootstrap.log"
-mkdir -p "${XDG_CACHE_HOME}" # Ensure the directory exists
+# Ensure the directory exists
+mkdir -p "${XDG_CACHE_HOME}"
+# Output into the log file
 echo "$(date): Starting bootstrap script..." | tee -a "${LOGFILE}"
 exec > >(tee -a "${LOGFILE}") 2>&1
 

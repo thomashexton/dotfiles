@@ -46,5 +46,6 @@
 
 [trace2]
     eventTarget = af_unix:dgram:/tmp/work-git-trace2.sock
+
 [protocol]
 	version = 2
