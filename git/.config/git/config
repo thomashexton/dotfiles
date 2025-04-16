@@ -2,15 +2,29 @@
     name = Thomas Hexton
     email = 25544371+thomashexton@users.noreply.github.com
 
-[core]
-    editor = zed --wait
-
 [push]
     default = current
     autoSetupRemote = true
 
 [pull]
     rebase = false
+
+[interactive]
+    diffFilter = "diff-so-fancy"
+
+[pager]
+    diff = diff-so-fancy | less --tabs=4 -RF
+    show = diff-so-fancy | less --tabs=4 -RF
+    branch = false
+
+[color]
+    ui = auto
+
+[alias]
+    parent = "!git show-branch | grep '*' | grep -v \"$(git rev-parse --abbrev-ref HEAD)\" | head -n1 | sed 's/.*\\[\\(.*\\)\\].*/\\1/' | sed 's/[\\^~].*//' #"
+
+[core]
+    editor = zed --wait
 
 [filter "lfs"]
     clean = git-lfs clean -- %f
@@ -20,20 +34,6 @@
 
 [credential]
     helper = /usr/local/share/gcm-core/git-credential-manager
-
-[pager]
-    diff = diff-so-fancy | less --tabs=4 -RF
-    show = diff-so-fancy | less --tabs=4 -RF
-    branch = false
-
-[interactive]
-    diffFilter = "diff-so-fancy"
-
-[color]
-    ui = auto
-
-[alias]
-    parent = "!git show-branch | grep '*' | grep -v \"$(git rev-parse --abbrev-ref HEAD)\" | head -n1 | sed 's/.*\\[\\(.*\\)\\].*/\\1/' | sed 's/[\\^~].*//' #"
 
 [maintenance]
     repo = /Users/thomashexton/work/employer
