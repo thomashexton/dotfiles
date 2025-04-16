@@ -45,7 +45,10 @@
     repo = /Users/thomashexton/work/thomashexton-dotfiles
 
 [trace2]
-    eventTarget = af_unix:dgram:/tmp/work-git-trace2.sock
+	eventTarget = af_unix:dgram:/tmp/work-git-trace2.sock
 
 [protocol]
 	version = 2
+
+[init]
+	defaultBranch = main

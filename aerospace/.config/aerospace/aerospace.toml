@@ -44,15 +44,15 @@ key-mapping.preset = 'qwerty'
 # on-focus-changed = ['move-mouse window-lazy-center']
 
 [workspace-to-monitor-force-assignment]
-1 = 'main'
-2 = 'main'
-3 = 'main'
-4 = 'main'
-5 = 'main'
-6 = 'main'
-7 = 'secondary'
-8 = 'secondary'
-9 = 'secondary'
+    1 = 'main'
+    2 = 'main'
+    3 = 'main'
+    4 = 'main'
+    5 = 'main'
+    6 = 'main'
+    7 = 'secondary'
+    8 = 'secondary'
+    9 = 'secondary'
 
 # Gaps between windows (inner-*) and between monitor edges (outer-*).
 # Possible values:
@@ -62,12 +62,12 @@ key-mapping.preset = 'qwerty'
 #                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
 #                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
-inner.horizontal = 10
-inner.vertical =   10
-outer.left =       10
-outer.bottom =     10
-outer.top =        10
-outer.right =      10
+    inner.horizontal = 0
+    inner.vertical =   0
+    outer.left =       0
+    outer.bottom =     0
+    outer.top =        0
+    outer.right =      0
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -161,14 +161,39 @@ outer.right =      10
     alt-shift-k = ['join-with up', 'mode main']
     alt-shift-l = ['join-with right', 'mode main']
 
+# 1Password
+[[on-window-detected]]
+    if.app-id = 'com.1password.1password'
+    run = ['layout floating']
+
 # Zoom
 [[on-window-detected]]
     if.app-id = 'us.zoom.xos'
     run = ['layout floating']
 
+# Chrmomium
+[[on-window-detected]]
+    if.app-id = 'org.chromium.Chromium'
+    run = ['layout floating']
+
 # Kap
 [[on-window-detected]]
     if.app-id = 'com.wulkano.kap'
+    run = ['layout floating']
+
+# Moonlight
+[[on-window-detected]]
+    if.app-id = 'com.moonlight-stream.Moonlight'
+    run = ['layout floating']
+
+# metadatics
+[[on-window-detected]]
+    if.app-id = 'com.markvapps.metadatics'
+    run = ['layout floating']
+
+# dBpoweramp
+[[on-window-detected]]
+    if.app-id = 'com.Illustrate.dBpoweramp-Music-Converter'
     run = ['layout floating']
 
 # Arc Start Up
@@ -183,11 +208,17 @@ outer.right =      10
     if.during-aerospace-startup = true
     run = ['move-node-to-workspace 4']
 
+# Cursor Start Up
+[[on-window-detected]]
+    if.app-id = 'com.todesktop.230313mzl4w4u92'
+    if.during-aerospace-startup = true
+    run = ['move-node-to-workspace 5']
+
 # Zed Start Up
 [[on-window-detected]]
     if.app-id = 'dev.zed.Zed'
     if.during-aerospace-startup = true
-    run = ['move-node-to-workspace 5']
+    run = ['move-node-to-workspace 6']
 
 # Slack Start Up
 [[on-window-detected]]
@@ -210,5 +241,11 @@ outer.right =      10
 # YouTube Music Start Up
 [[on-window-detected]]
     if.app-id = 'com.github.th-ch.youtube-music'
+    if.during-aerospace-startup = true
+    run = ['move-node-to-workspace 9']
+
+# YouTube Music Start Up
+[[on-window-detected]]
+    if.app-id = 'com.roon.Roon'
     if.during-aerospace-startup = true
     run = ['move-node-to-workspace 9']

@@ -31,3 +31,6 @@ alias pubssh="pbcopy < ~/.ssh/personal_laptop_ed25519.pub"
 # Git additions
 alias gcog="git checkout green"
 alias gcom="git checkout master"
+
+alias estagp="USER_LOCALE=en pnpm webpack-dev-server -e editor -p staging"
+alias hstagp="USER_LOCALE=en pnpm webpack-dev-server -e home -p staging"

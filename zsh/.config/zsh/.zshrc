@@ -150,3 +150,14 @@ export JETBRAINS_LICENSE_SERVER=https://work.fls.jetbrains.com/
 # DO NOT EDIT: Added by Coder CLI installer (https://coder.work-internal.com/install.sh)
 [ -e "/Users/thomashexton/.coder.sh" ] && . "/Users/thomashexton/.coder.sh"
 # EndCoderEnv
+
+# Created by `pipx` on 2024-12-12 04:15:43
+export PATH="$PATH:/Users/thomashexton/.local/bin"
+
+# pnpm
+export PNPM_HOME="/Users/thomashexton/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
