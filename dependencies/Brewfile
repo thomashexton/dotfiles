@@ -1,10 +1,6 @@
-# tap "homebrew/cask-fonts"
-# tap "homebrew/services"
-
-
 tap "epk/epk" # SF Mono Nerd Font
 # tap "koekeishiya/formulae" # skhd & yabai
-tap "nikitabobko/tap/aerospace"
+tap "nikitabobko/tap"
 
 
 ## CLI
@@ -19,12 +15,12 @@ brew "stow"
 # NeoVim, get on it
 brew "neovim"
 # Window manager for macOS
-brew "aerospace"
 
 
 ## Casks (GUI)
 cask "1password"
 cask "aerospace"
+cask "alacritty"
 cask "font-sf-mono-nerd-font"
 cask "karabiner-elements"
 cask "linearmouse"
