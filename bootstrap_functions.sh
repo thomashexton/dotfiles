@@ -59,7 +59,7 @@ function install_from_brewfile() {
     return 1
   fi
   echo "Installing packages and apps with Homebrew from $BREWFILE..."
-  brew bundle --file="dependencies/$BREWFILE" --no-lock --no-upgrade
+  brew bundle --file="${WORKDIR}/dependencies/$BREWFILE" --no-lock --no-upgrade
 }
 
 

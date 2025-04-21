@@ -1,9 +1,10 @@
-tap "homebrew/cask-fonts"
-tap "homebrew/services"
+# tap "homebrew/cask-fonts"
+# tap "homebrew/services"
 
 
 tap "epk/epk" # SF Mono Nerd Font
 # tap "koekeishiya/formulae" # skhd & yabai
+tap "nikitabobko/tap/aerospace"
 
 
 ## CLI
@@ -23,6 +24,7 @@ brew "aerospace"
 
 ## Casks (GUI)
 cask "1password"
+cask "aerospace"
 cask "font-sf-mono-nerd-font"
 cask "karabiner-elements"
 cask "linearmouse"
