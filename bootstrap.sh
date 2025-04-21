@@ -45,8 +45,8 @@ echo "Bootstrapping..."
 source "$(dirname "$0")/bootstrap_functions.sh"
 
 request_sudo_privileges
-# install_homebrew
-# install_homebrew_packages_and_apps
+install_homebrew
+install_homebrew_packages_and_apps
 stow_configs
 stow_secret_configs
 display_completion_message
