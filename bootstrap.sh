@@ -4,20 +4,19 @@
 # Title: MacOS dotfiles bootstrap script
 # Description: This script sets up a new MacOS system with the user's desired
 #              configuration files, programs and tools. It does so by installing
-#              Homebrew, checking for Rosetta 2 (if applicable), installing
-#              packages and apps from a Brewfile, installing Oh My Zsh, the
-#              Powerlevel10k zsh theme, additional zsh plugins and linking
-#              custom configuration files. It also adds asdf version manager
-#              plugins and restores configs with mackup.
+#              Homebrew, installing packages and apps from Brewfiles, and  
+#              using GNU stow to link configuration files to their appropriate
+#              locations. The script supports both home and work environments
+#              and can optionally skip Homebrew setup to only stow configs.
 #
 # Author: Thomas Hexton
-# Date: April 2023
-# Version: 1
-# Usage: Run the script with ./bootstrap.sh
+# Date: April 2025
+# Version: 2
+# Usage: Run the script with ./bootstrap.sh OR ./bootstrap.sh --stow-only
 #
 # Notes:
 #  - This script requires a Mac using Apple Silicon.
-#  - This script should be run with administrator privileges.
+#  - This script should be run with administrator privileges unless using --stow-only.
 #  - This script is opinionated and tailored to the author's preferences.
 #
 ################################################################################

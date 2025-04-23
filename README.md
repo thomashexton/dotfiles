@@ -2,13 +2,10 @@
 
 My personal dotfiles for macOS on Apple Silicon.
 
-## Setup
+## Quick Options
 
-```sh
-git clone https://github.com/thomashexton/dotfiles.git ~/dotfiles
-cd ~/dotfiles
-./bootstrap.sh
-```
+- Full setup: `./bootstrap.sh`
+- Stow only (skip Homebrew): `./bootstrap.sh --stow-only`
 
 ## Notes
 
@@ -17,16 +14,6 @@ cd ~/dotfiles
 - Uses GNU stow for symlink management
 - Secret configurations stored in iCloud Drive
 - Supports home/work environment configurations
-
-## Table of Contents
-
-1. [Before Setup](#before-setup)
-   - [Prerequisites](#prerequisites)
-2. [Setup](#setup)
-3. [After Setup](#after-setup)
-   - [Git](#git)
-   - [SSH](#ssh)
-   - [Secrets](#secrets)
 
 ## Before Setup
 
@@ -55,33 +42,24 @@ The bootstrap script will:
 4. Stow configuration files to their appropriate locations
 5. Set up additional secret configurations from iCloud (if available)
 
-## After Setup
+## Post-Setup Configuration
 
-### Git
+### Git Identity
 
-- Replace values with your own, and then run.
-
-Note: it is recommended to use your GitHub-provided `noreply` address ... [see setting your commit email address](https://help.github.com/en/github/setting-up-and-managing-your-github-user-account/setting-your-commit-email-address#setting-your-commit-email-address-on-github).
-
-  ```sh
-  git config --global user.name "Your Name"
-  git config --global user.email "you@example.com"
-  ```
-
-<!-- - For extra credit, [setup GPG signing](https://help.github.com/en/github/authenticating-to-github/signing-commits) for your commits.
+Set your Git identity:
 
 ```sh
-git config --global commit.gpgsign true
-git config --global gpg.program "gpg"
-``` -->
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+```
 
-### SSH
+Note: Consider using your [GitHub-provided no-reply address](https://help.github.com/en/github/setting-up-and-managing-your-github-user-account/setting-your-commit-email-address#setting-your-commit-email-address-on-github).
 
-- Either restore your ssh key or [generate a new key](https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
+### Secure Configurations
 
-### Secrets
+- **SSH Keys**: [Generate new SSH keys](https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) or restore from backup
+- **Secret Files**: Place in `~/Library/Mobile Documents/com~apple~CloudDocs/stow/` for automatic linking
 
-Secret configurations are managed through iCloud. They should be placed in:
-`~/Library/Mobile Documents/com~apple~CloudDocs/stow/`
+### Additional Setup
 
-The bootstrap script will automatically link these configs if the directory exists.
+- **Fish Shell**: Run `fisher update` to install Fish plugins if using the Fish configuration
