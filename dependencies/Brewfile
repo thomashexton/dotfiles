@@ -1,5 +1,5 @@
 tap "epk/epk" # SF Mono Nerd Font
-# tap "koekeishiya/formulae" # skhd & yabai
+# tap "koekeishiya/formulae" # skhd
 tap "nikitabobko/tap"
 
 
@@ -9,19 +9,19 @@ brew "gh"
 # Distributed revision control system
 brew "git"
 # A better git diff, used in `~/.config/git/config`
-brew "diff-so-fancy"
+brew "difftastic"
 # Keep your Mac's application settings in sync
 brew "stow"
 # NeoVim, get on it
 brew "neovim"
-# Window manager for macOS
 
 
 ## Casks (GUI)
-cask "1password"
 cask "aerospace"
 cask "alacritty"
+cask "firefox"
 cask "font-sf-mono-nerd-font"
 cask "karabiner-elements"
 cask "linearmouse"
+cask "raycast"
 cask "zed"

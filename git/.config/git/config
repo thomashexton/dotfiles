@@ -3,24 +3,18 @@
     email = 25544371+thomashexton@users.noreply.github.com
 
 [push]
-    default = current
     autoSetupRemote = true
 
-[pull]
-    rebase = false
-
-[interactive]
-    diffFilter = "diff-so-fancy"
+[diff]
+    external = difft
 
 [pager]
-    diff = diff-so-fancy | less --tabs=4 -RF
-    show = diff-so-fancy | less --tabs=4 -RF
     branch = false
 
-[color]
-    ui = auto
-
 [alias]
+    # Traditional aliases
+    tdiff = -c diff.external= diff --no-ext-diff
+    # Parent branch
     parent = "!git show-branch | grep '*' | grep -v \"$(git rev-parse --abbrev-ref HEAD)\" | head -n1 | sed 's/.*\\[\\(.*\\)\\].*/\\1/' | sed 's/[\\^~].*//' #"
 
 [core]
@@ -31,9 +25,3 @@
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
-
-[protocol]
-	version = 2
-
-[init]
-	defaultBranch = main

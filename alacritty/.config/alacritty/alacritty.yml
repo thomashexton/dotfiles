@@ -1,0 +1,45 @@
+live_config_reload: true
+
+env:
+  TERM: xterm-256color
+
+window:
+  decorations: buttonless
+  opacity: 1
+  padding:
+    x: 20
+    y: 20
+
+font:
+  normal:
+    family: 'MonoLisa Nerd Font'
+    style: Regular
+  italic:
+    family: 'MonoLisa Nerd Font'
+    style: Regular Italic
+  bold:
+    family: 'MonoLisa Nerd Font'
+    style: Bold
+  bold_italic:
+    family: 'MonoLisa Nerd Font'
+    style: Bold Italic
+  # normal:
+  #   family: "SFMono Nerd Font"
+  #   style: Regular
+  # italic:
+  #   family: "SFMono Nerd Font"
+  #   style: Regular Italic
+  # bold:
+  #   family: "SFMono Nerd Font"
+  #   style: Bold
+  # bold_italic:
+  #   family: "SFMono Nerd Font"
+  #   style: Bold Italic
+  size: 14.0
+
+# import:
+  # - ~/.config/alacritty/catppuccin/catppuccin-mocha.yml
+  # - ~/.config/alacritty/catppuccin/catppuccin-macchiato.yml
+  # - ~/.config/alacritty/catppuccin/catppuccin-frappe.yml
+  # - ~/.config/alacritty/catppuccin/catppuccin-latte.yml
+  # - ~/.config/alacritty/gruvbox/gruvbox-medium.yml

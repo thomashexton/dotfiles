@@ -1,6 +1,7 @@
-# CLI
-brew git-lfs
-brew git-credential-manager
+## CLI
+brew "git-lfs"
+brew "git-credential-manager"
 
 
-# Casks (GUI)
+## Casks (GUI)
+cask "visual-studio-code"

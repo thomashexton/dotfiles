@@ -13,6 +13,7 @@ function request_sudo_privileges() {
   done 2>/dev/null &
 }
 
+
 # Installs Homebrew on Apple Silicon Macs and sets up the environment
 function install_homebrew() {
   local machine_arch=$(uname -m)
@@ -31,14 +32,27 @@ function install_homebrew() {
     echo "Setting up Homebrew environment..."
     eval "$(/opt/homebrew/bin/brew shellenv)"
 
-    # Verify Homebrew installation
-    brew doctor &>/dev/null
-    local brew_success=$?
-    if [[ $brew_success -eq 0 ]]; then
-      echo "Homebrew installation is successful."
+    # Use a simple version check instead of brew doctor
+    if brew --version &>/dev/null; then
+      echo "Homebrew is installed and functioning."
     else
-      echo "Error: Homebrew installation is unsuccessful. Please fix the issues shown by 'brew doctor' and run this script again."
+      echo "Error: Homebrew installation appears to be broken."
       exit 1
+    fi
+
+    # Run brew doctor with a timeout, but don't halt execution
+    echo "Running brew doctor check (with 10 second timeout)..."
+    if command -v timeout &>/dev/null; then
+      # Use timeout command if available
+      if timeout 10 brew doctor; then
+        echo "Homebrew installation is healthy."
+      else
+        echo "Warning: brew doctor found issues. Run 'brew doctor' manually to see details."
+        echo "Continuing anyway..."
+      fi
+    else
+      # Fallback method if timeout command isn't available
+      echo "To check for Homebrew issues, run 'brew doctor' manually."
     fi
   else
     echo "To install Homebrew, this script requires a Mac using Apple Silicon."
@@ -59,7 +73,7 @@ function install_from_brewfile() {
     return 1
   fi
   echo "Installing packages and apps with Homebrew from $BREWFILE..."
-  brew bundle --file="${WORKDIR}/dependencies/$BREWFILE" --no-lock --no-upgrade
+  brew bundle --file="${WORKDIR}/dependencies/$BREWFILE" --no-upgrade
 }
 
 
@@ -86,16 +100,19 @@ function install_homebrew_packages_and_apps() {
   fi
 }
 
+
 function stow_configs() {
   local packages=(
     aerospace
+    alacritty
     editorconfig
     fish
     gh
     git
+    karabiner
+    linearmouse
     skhd
-    # stow
-    yabai
+    stow
     zed
     zim
     zsh
@@ -105,6 +122,7 @@ function stow_configs() {
   stow -t "${HOME}" "${packages[@]}" --no-folding --ignore='.*\.DS_Store'
   echo "Configs stowed."
 }
+
 
 function stow_secret_configs() {
   local icloud_stow_path="${HOME}/Library/Mobile Documents/com~apple~CloudDocs/stow"
@@ -123,6 +141,7 @@ function stow_secret_configs() {
   stow -t "${HOME}" -d "${icloud_stow_path}" "${packages[@]}" --no-folding --ignore='.*\.DS_Store'
   echo "Secret configs stowed."
 }
+
 
 function display_completion_message() {
   echo "Bootstrap complete."
