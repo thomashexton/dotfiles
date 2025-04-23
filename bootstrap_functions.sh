@@ -134,6 +134,7 @@ function stow_secret_configs() {
 
   local packages=(
     ssh
+    git_work
     zsh
   )
 
