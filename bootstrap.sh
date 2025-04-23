@@ -44,9 +44,18 @@ echo "Bootstrapping..."
 # Import all the bootstrap functions
 source "$(dirname "$0")/bootstrap_functions.sh"
 
-request_sudo_privileges
-install_homebrew
-install_homebrew_packages_and_apps
-stow_configs
-stow_secret_configs
+# Check for stow-only flag
+if [[ "${1-}" == "--stow-only" ]]; then
+  echo "Running in stow-only mode. Skipping Homebrew setup."
+  stow_configs
+  stow_secret_configs || true
+else
+  # Normal full bootstrap process
+  request_sudo_privileges
+  install_homebrew
+  install_homebrew_packages_and_apps
+  stow_configs
+  stow_secret_configs
+fi
+
 display_completion_message

@@ -4,5 +4,4 @@ export XDG_DATA_HOME="${XDG_DATA_HOME:=$HOME/.local/share}"
 
 [[ -d $XDG_CONFIG_HOME/zsh ]] && export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
 
-# source "${ZDOTDIR}/.zshenv"
 . "$HOME/.cargo/env"
