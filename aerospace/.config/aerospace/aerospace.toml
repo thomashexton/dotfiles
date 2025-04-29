@@ -181,9 +181,14 @@ key-mapping.preset = 'qwerty'
     if.app-id = 'com.wulkano.kap'
     run = ['layout floating']
 
-# Moonlight
+# BattleNet
 [[on-window-detected]]
-    if.app-id = 'com.moonlight-stream.Moonlight'
+    if.app-id = 'net.battle.app'
+    run = ['layout floating']
+
+# WoW
+[[on-window-detected]]
+    if.app-id = 'com.blizzard.worldofwarcraft'
     run = ['layout floating']
 
 # metadatics
@@ -244,7 +249,7 @@ key-mapping.preset = 'qwerty'
     if.during-aerospace-startup = true
     run = ['move-node-to-workspace 9']
 
-# YouTube Music Start Up
+# Roon Start Up
 [[on-window-detected]]
     if.app-id = 'com.roon.Roon'
     if.during-aerospace-startup = true

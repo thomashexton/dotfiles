@@ -59,7 +59,7 @@
   },
   "chat_panel": {
     // Whether to show the collaboration panel button in the status bar.
-    "button": false
+    "button": "never"
   },
   "notification_panel": {
     // Whether to show the collaboration panel button in the status bar.

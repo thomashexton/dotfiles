@@ -21,7 +21,10 @@ cask "font-sf-mono-nerd-font"
 # cask "iterm2"
 # cask "logitech-options" # cask version is not the latest "+" variant
 # cask "lunar" // monitor control software
+# cask "mimestream"
+cask "nuage"
 cask "notion"
+cask "prusaslicer"
 # cask "shortcat"
 cask "signal"
 # cask "slack"
