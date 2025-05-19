@@ -111,7 +111,6 @@ function stow_configs() {
     ghostty
     git
     karabiner
-    linearmouse
     skhd
     stow
     zed
