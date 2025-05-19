@@ -30,7 +30,7 @@
   "assistant": {
     "default_model": {
       "provider": "copilot_chat",
-      "model": "claude-3-7-sonnet"
+      "model": "gpt-4.1"
     },
     "version": "2",
     // "default_width": 960 // 2k monitor w/ left/right
@@ -58,9 +58,9 @@
     "button": false
   },
   "chat_panel": {
-    // Whether to show the collaboration panel button in the status bar.
-    "button": false
-  },
+      // Whether to show the collaboration panel button in the status bar.
+      "button": "never"
+    },
   "notification_panel": {
     // Whether to show the collaboration panel button in the status bar.
     "button": true,
@@ -76,10 +76,10 @@
     "metrics": true
   },
   "outline_panel": {
-    // "default_width": 960, // 4k monitor opt 2
-    // "default_width": 853, // 2k monitor
-    "default_width": 540, // 2k monitor w/ left/right
-  },
+      // "default_width": 960, // 4k monitor opt 2
+      // "default_width": 853, // 2k monitor
+      "default_width": 540 // 2k monitor w/ left/right
+    },
 
 
   // FORMATTING

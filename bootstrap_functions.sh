@@ -108,6 +108,7 @@ function stow_configs() {
     editorconfig
     fish
     gh
+    ghostty
     git
     karabiner
     linearmouse
