@@ -48,6 +48,7 @@ if [[ "${1-}" == "--stow-only" ]]; then
   echo "Running in stow-only mode. Skipping Homebrew setup."
   stow_configs
   stow_secret_configs || true
+  convert_git_remote_to_ssh
 else
   # Normal full bootstrap process
   request_sudo_privileges
@@ -55,6 +56,7 @@ else
   install_homebrew_packages_and_apps
   stow_configs
   stow_secret_configs
+  convert_git_remote_to_ssh
 fi
 
 display_completion_message
