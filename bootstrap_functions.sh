@@ -144,6 +144,24 @@ function stow_secret_configs() {
 }
 
 
+function convert_git_remote_to_ssh() {
+  local current_url
+  current_url=$(git config --get remote.origin.url)
+  
+  if [[ $current_url == https://github.com/* ]]; then
+    echo "Converting Git remote from HTTPS to SSH..."
+    local repo_path
+    repo_path=$(echo "$current_url" | sed -E 's|https://github.com/(.*)|\1|')
+    git remote set-url origin "git@github.com:$repo_path"
+    echo "Git remote URL updated to SSH."
+  elif [[ $current_url == git@github.com:* ]]; then
+    echo "Git remote is already using SSH."
+  else
+    echo "Warning: Git remote URL is not in the expected format. Skipping conversion."
+  fi
+}
+
+
 function display_completion_message() {
   echo "Bootstrap complete."
 }
