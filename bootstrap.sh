@@ -55,7 +55,7 @@ else
   install_homebrew
   install_homebrew_packages_and_apps
   stow_configs
-  stow_secret_configs
+  stow_secret_configs || true
   convert_git_remote_to_ssh
 fi
 

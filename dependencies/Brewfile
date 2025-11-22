@@ -1,4 +1,3 @@
-tap "epk/epk" # SF Mono Nerd Font
 # tap "koekeishiya/formulae" # skhd
 tap "nikitabobko/tap"
 
@@ -19,16 +18,11 @@ brew "neovim"
 ## Casks (GUI)
 cask "aerospace"
 cask "alacritty"
-# cask "alfred"
 cask "appcleaner"
-cask "firefox"
-cask "font-sf-mono-nerd-font"
-cask "ghostty"
-cask "kap"
+# cask "ghostty"
+# cask "kap"
 cask "karabiner-elements"
-cask "monarch"
-cask "monitorcontrol"
-cask "raycast"
+# cask "monitorcontrol"
 # cask "rectangle-pro"
-cask "roon"
+# cask "roon"
 cask "zed"
