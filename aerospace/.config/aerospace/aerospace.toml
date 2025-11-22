@@ -23,7 +23,7 @@ enable-normalization-opposite-orientation-for-nested-containers = true
 # See: https://nikitabobko.github.io/AeroSpace/guide#layouts
 # The 'accordion-padding' specifies the size of accordion padding
 # You can set 0 to disable the padding feature
-accordion-padding = 250
+accordion-padding = 100
 
 # Possible values: tiles|accordion
 default-root-container-layout = 'tiles'
@@ -49,10 +49,11 @@ key-mapping.preset = 'qwerty'
     3 = 'main'
     4 = 'main'
     5 = 'main'
-    6 = 'main'
+    6 = 'secondary'
     7 = 'secondary'
     8 = 'secondary'
     9 = 'secondary'
+    0 = 'secondary'
 
 # Gaps between windows (inner-*) and between monitor edges (outer-*).
 # Possible values:
@@ -135,7 +136,7 @@ key-mapping.preset = 'qwerty'
     alt-shift-r = 'mode resize'
     alt-shift-comma = 'mode service'
 
-# 'reize' binding mode declaration.
+# 'resize' binding mode declaration.
 [mode.resize.binding]
     h = 'resize width -50'
     j = 'resize height +50'
@@ -152,9 +153,6 @@ key-mapping.preset = 'qwerty'
     r = ['flatten-workspace-tree', 'mode main'] # reset layout
     f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
     backspace = ['close-all-windows-but-current', 'mode main']
-
-    # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
-    #s = ['layout sticky tiling', 'mode main']
 
     alt-shift-h = ['join-with left', 'mode main']
     alt-shift-j = ['join-with down', 'mode main']
