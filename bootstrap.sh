@@ -43,7 +43,8 @@ echo "Bootstrapping..."
 # Import all the bootstrap functions
 source "$(dirname "$0")/bootstrap_functions.sh"
 
-# Check for stow-only flag
+ensure_profile_choice
+
 if [[ "${1-}" == "--stow-only" ]]; then
   echo "Running in stow-only mode. Skipping Homebrew setup."
   stow_configs
