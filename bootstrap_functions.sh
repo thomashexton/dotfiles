@@ -1,4 +1,67 @@
 WORKDIR=$(pwd)
+DOTFILES_STATE_DIR="${XDG_CONFIG_HOME:-${HOME}/.config}/dotfiles-bootstrap"
+DOTFILES_PROFILE_FILE="${DOTFILES_STATE_DIR}/profile"
+mkdir -p "${DOTFILES_STATE_DIR}"
+
+# Helpers for persisting the machine profile (home/work)
+function set_bootstrap_profile() {
+  local profile=$1
+  printf "%s\n" "${profile}" > "${DOTFILES_PROFILE_FILE}"
+}
+
+function get_bootstrap_profile() {
+  if [[ -f "${DOTFILES_PROFILE_FILE}" ]]; then
+    tr -d '\n' < "${DOTFILES_PROFILE_FILE}"
+  fi
+}
+
+function current_profile() {
+  if [[ "${WORK:-}" == "true" ]]; then
+    echo "work"
+    return
+  fi
+
+  local saved_profile
+  saved_profile=$(get_bootstrap_profile)
+  if [[ "${saved_profile}" == "work" || "${saved_profile}" == "home" ]]; then
+    echo "${saved_profile}"
+  fi
+}
+
+function is_work_machine() {
+  [[ "$(current_profile)" == "work" ]]
+}
+
+function ensure_profile_choice() {
+  if [[ "${WORK:-}" == "true" ]]; then
+    echo "WORK=true detected; using work profile for this run."
+    return 0
+  fi
+
+  local saved_profile
+  saved_profile=$(get_bootstrap_profile)
+  if [[ "${saved_profile}" == "home" || "${saved_profile}" == "work" ]]; then
+    echo "Using stored profile '${saved_profile}'."
+    echo "Remove ${DOTFILES_PROFILE_FILE} to re-prompt."
+    return 0
+  fi
+
+  while true; do
+    read -n 1 -p "Please enter 'h' for home or 'w' for work: " choice
+    echo
+    if [[ ${choice} =~ [Hh] ]]; then
+      set_bootstrap_profile "home"
+      echo "Saved 'home' profile for future runs."
+      break
+    elif [[ ${choice} =~ [Ww] ]]; then
+      set_bootstrap_profile "work"
+      echo "Saved 'work' profile for future runs."
+      break
+    else
+      echo "Invalid choice. Please enter either 'h' or 'w'."
+    fi
+  done
+}
 
 # Asks for the administrator password upfront
 function request_sudo_privileges() {
@@ -40,6 +103,7 @@ function install_homebrew() {
       echo "Run 'brew doctor' for diagnostics."
       exit 1
     fi
+  fi
 
   # Update Homebrew
   echo "Updating Homebrew..."
@@ -64,21 +128,17 @@ function install_homebrew_packages_and_apps() {
   echo "Tapping common repos and installing common packages..."
   install_from_brewfile "Brewfile"
 
-  echo -n "Please enter 'h' for home or 'w' for work: "
-  if read -t 15 -n 1 choice; then
-    echo
-    if [[ ${choice} =~ [HhWw] ]]; then
-      if [[ ${choice} =~ [Hh] ]]; then
-        install_from_brewfile "Brewfile_home"
-      else
-        install_from_brewfile "Brewfile_work"
-      fi
-    else
-      echo "Invalid choice. Please enter either 'h' or 'w'."
-    fi
-  else
-    echo
-    echo "Timeout reached. You didn't choose a 'home' or 'work' Brewfile, so only common packages were installed."
+  local profile_choice
+  profile_choice=$(current_profile)
+  if [[ -z "${profile_choice}" ]]; then
+    echo "Error: no profile selected. Run ensure_profile_choice first." >&2
+    exit 1
+  fi
+
+  if [[ "${profile_choice}" == "home" ]]; then
+    install_from_brewfile "Brewfile_home"
+  elif [[ "${profile_choice}" == "work" ]]; then
+    install_from_brewfile "Brewfile_work"
   fi
 }
 
@@ -116,9 +176,15 @@ function stow_secret_configs() {
 
   local packages=(
     ssh
-    git_work
     zsh
   )
+
+  if is_work_machine; then
+    packages+=(git_work)
+    echo "Work profile detected; including work git config."
+  else
+    echo "Home profile detected; skipping work git config."
+  fi
 
   echo "Stowing secret packages: ${packages[*]}"
   stow -t "${HOME}" -d "${icloud_stow_path}" "${packages[@]}" --no-folding --ignore='.*\.DS_Store'
@@ -152,7 +218,7 @@ function setup_ssh_config_include() {
   
   # Check if personal block already exists
   if grep -q "## -- START PERSONAL -- ##" "${ssh_config}"; then
-    echo "SSH config already includes personal config"
+    echo "SSH config already includes personal config."
     return 0
   fi
   

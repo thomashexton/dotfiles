@@ -6,6 +6,8 @@ My personal dotfiles for macOS on Apple Silicon.
 
 - Full setup: `./bootstrap.sh`
 - Stow only (skip Homebrew): `./bootstrap.sh --stow-only`
+- Work machine secrets: `WORK=true ./bootstrap.sh`
+- Reset stored profile: `rm -f ~/.config/dotfiles-bootstrap/profile`
 
 ## Notes
 
@@ -13,7 +15,8 @@ My personal dotfiles for macOS on Apple Silicon.
 - Idempotent: can be run multiple times safely
 - Uses GNU stow for symlink management
 - Secret configurations stored in iCloud Drive
-- Supports home/work environment configurations
+- Remembers your home/work choice (remove `~/.config/dotfiles-bootstrap/profile` to re-prompt)
+- Supports home/work environment configurations (use `WORK=true` to force work mode)
 
 ## Before Setup
 
@@ -38,9 +41,15 @@ cd ~/dotfiles  # Important: The bootstrap script needs to run from the dotfiles 
 The bootstrap script will:
 1. Install Homebrew if not already installed
 2. Install essential packages including GNU stow for dotfile management
-3. Prompt you to choose between home or work configuration
+3. Prompt once to choose between home or work configuration (stored in `~/.config/dotfiles-bootstrap/profile`)
 4. Stow configuration files to their appropriate locations
 5. Set up additional secret configurations from iCloud (if available)
+
+### Home vs Work profile
+
+- First run: respond to the prompt (h/w). Your answer is saved to `~/.config/dotfiles-bootstrap/profile`.
+- Subsequent runs reuse the saved value automatically so both Brewfile selection and secret configs stay in sync.
+- Temporarily override by exporting `WORK=true`; delete the profile file if you want to be prompted again.
 
 ## Post-Setup Configuration
 
