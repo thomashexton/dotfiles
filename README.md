@@ -53,22 +53,5 @@ The bootstrap script will:
 
 ## Post-Setup Configuration
 
-### Git Identity
-
-Set your Git identity:
-
-```sh
-git config --global user.name "Your Name"
-git config --global user.email "you@example.com"
-```
-
-Note: Consider using your [GitHub-provided no-reply address](https://help.github.com/en/github/setting-up-and-managing-your-github-user-account/setting-your-commit-email-address#setting-your-commit-email-address-on-github).
-
-### Secure Configurations
-
 - **SSH Keys**: [Generate new SSH keys](https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) or restore from backup
 - **Secret Files**: Place in `~/Library/Mobile Documents/com~apple~CloudDocs/stow/` for automatic linking
-
-### Additional Setup
-
-- **Fish Shell**: Run `fisher update` to install Fish plugins if using the Fish configuration
