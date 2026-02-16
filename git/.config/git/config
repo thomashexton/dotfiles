@@ -2,11 +2,6 @@
     name = Thomas Hexton
     email = 25544371+thomashexton@users.noreply.github.com
 
-# Load work-specific config for repos under ~/work/
-# Delivered via iCloud stow (not committed to this repo)
-[includeIf "gitdir:~/work/"]
-    path = config.work
-
 [push]
     autoSetupRemote = true
 
@@ -28,12 +23,6 @@
 [core]
     editor = zed --wait
 
-[filter "lfs"]
-    clean = git-lfs clean -- %f
-    smudge = git-lfs smudge -- %f
-    process = git-lfs filter-process
-    required = true
-
 [credential "https://github.com"]
     helper =
     helper = !/opt/homebrew/bin/gh auth git-credential
@@ -41,3 +30,11 @@
 [credential "https://gist.github.com"]
     helper =
     helper = !/opt/homebrew/bin/gh auth git-credential
+
+[maintenance]
+	repo = /Users/thomashexton/work/charcoal
+	repo = /Users/thomashexton/work/canva
+	repo = /Users/thomashexton/work/thomashexton-dotfiles
+
+[trace2]
+	eventtarget = af_unix:dgram:/tmp/olly-git-trace2.sock
