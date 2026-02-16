@@ -125,4 +125,8 @@ for key ('^[[B' '^N' ${terminfo[kcud1]}) bindkey ${key} history-substring-search
 for key ('k') bindkey -M vicmd ${key} history-substring-search-up
 for key ('j') bindkey -M vicmd ${key} history-substring-search-down
 unset key
+
+# Free 'gt*' for work CLI tools
+unalias gt gtl gts gtv gtx 2>/dev/null
+
 # }}} End configuration added by Zim install

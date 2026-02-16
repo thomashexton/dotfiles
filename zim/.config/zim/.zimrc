@@ -10,8 +10,8 @@ zmodule git-info
 zmodule asciiship
 
 # Completion
-zmodule zsh-users/zsh-completions --fpath src
-zmodule completion
+#zmodule zsh-users/zsh-completions --fpath src
+#zmodule completion
 
 # Additional tools
 zmodule https://github.com/agkozak/zsh-z

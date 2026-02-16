@@ -2,6 +2,11 @@
     name = Thomas Hexton
     email = 25544371+thomashexton@users.noreply.github.com
 
+# Load work-specific config for repos under ~/work/
+# Delivered via iCloud stow (not committed to this repo)
+[includeIf "gitdir:~/work/"]
+    path = config.work
+
 [push]
     autoSetupRemote = true
 
@@ -17,6 +22,9 @@
     # Parent branch
     parent = "!git show-branch | grep '*' | grep -v \"$(git rev-parse --abbrev-ref HEAD)\" | head -n1 | sed 's/.*\\[\\(.*\\)\\].*/\\1/' | sed 's/[\\^~].*//' #"
 
+[merge]
+    conflictstyle = diff3
+
 [core]
     editor = zed --wait
 
@@ -25,3 +33,11 @@
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
+
+[credential "https://github.com"]
+    helper =
+    helper = !/opt/homebrew/bin/gh auth git-credential
+
+[credential "https://gist.github.com"]
+    helper =
+    helper = !/opt/homebrew/bin/gh auth git-credential

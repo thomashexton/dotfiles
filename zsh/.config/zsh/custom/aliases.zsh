@@ -20,3 +20,5 @@ alias pubip="curl -s ipv4.icanhazip.com | tee >(pbcopy)"
 
 # Copy my public SSH rsa to clipboard
 alias pubssh="pbcopy < ~/.ssh/personal_laptop_ed25519.pub"
+
+# Work-specific aliases are in iCloud zsh secrets

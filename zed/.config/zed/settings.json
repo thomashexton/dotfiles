@@ -8,7 +8,14 @@
 // from the command palette or from `Zed` application menu.
 {
   // THEME
-  "theme": "One Dark",
+  "agent_servers": {
+    "claude": {
+      "default_model": "us.anthropic.claude-opus-4-6-v1",
+      "favorite_models": []
+    }
+  },
+  "theme": "macOS Classic Dark",
+
 
   // FONTS
   "buffer_font_family": "MonoLisa Nerd Font",
@@ -18,31 +25,21 @@
   },
   "buffer_line_height": "comfortable",
 
-  // 42" 4k
-  "buffer_font_size": 14,
-  "ui_font_size": 14,
-
   // // 27" 2880p && 1440p
-  // "buffer_font_size": 16,
-  // "ui_font_size": 16, // ui font size
+  "buffer_font_size": 13,
+  "ui_font_size": 14, // ui font size
 
   // Assistant Chat
-  "assistant": {
+  "agent": {
     "default_model": {
       "provider": "copilot_chat",
       "model": "gpt-4.1"
     },
-    "version": "2",
     // "default_width": 960 // 2k monitor w/ left/right
     "default_width": 425 // 2k monitor w/ left/right
   },
 
   // MISC
-  "features": {
-    // Show Copilot icon in status bar
-    "edit_prediction_provider": "copilot",
-    "copilot": true
-  },
   "project_panel": {
     // Default width of the project panel.
     // "default_width": 1280, // 4k monitor
@@ -56,10 +53,6 @@
   "collaboration_panel": {
     // Whether to show the collaboration panel button in the status bar.
     "button": false
-  },
-  "chat_panel": {
-    // Whether to show the collaboration panel button in the status bar.
-    "button": "never"
   },
   "notification_panel": {
     // Whether to show the collaboration panel button in the status bar.
@@ -100,12 +93,6 @@
   //    or falling back to formatting via language server:
   //     "formatter": "auto"
   "format_on_save": "off",
-  "formatter": {
-    "external": {
-      "command": "/Users/thomashexton/work/employer/tools/dprint/dprint",
-      "arguments": ["fmt", "--", "${buffer_path}"]
-    }
-  },
 
 
   // LANGUAGES
