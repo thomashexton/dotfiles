@@ -271,6 +271,17 @@ function setup_amp_config() {
 }
 
 
+function setup_claude_config() {
+  local script="${WORKDIR}/claude/setup-claude.sh"
+  if [[ -f "${script}" ]]; then
+    echo "Merging Claude CLI settings overrides..."
+    bash "${script}"
+  else
+    echo "Claude setup script not found. Skipping."
+  fi
+}
+
+
 function install_tmux_plugin_manager() {
   if [[ -d "${HOME}/.tmux/plugins/tpm" ]]; then
     echo "TPM already installed."
