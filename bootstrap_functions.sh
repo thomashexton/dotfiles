@@ -260,6 +260,17 @@ function copy_karabiner_config() {
 }
 
 
+function setup_amp_config() {
+  local script="${WORKDIR}/amp/setup-amp.sh"
+  if [[ -f "${script}" ]]; then
+    echo "Merging Amp settings overrides..."
+    bash "${script}"
+  else
+    echo "Amp setup script not found. Skipping."
+  fi
+}
+
+
 function install_tmux_plugin_manager() {
   if [[ -d "${HOME}/.tmux/plugins/tpm" ]]; then
     echo "TPM already installed."

@@ -4,7 +4,7 @@
 # Title: MacOS dotfiles bootstrap script
 # Description: This script sets up a new MacOS system with the user's desired
 #              configuration files, programs and tools. It does so by installing
-#              Homebrew, installing packages and apps from Brewfiles, and  
+#              Homebrew, installing packages and apps from Brewfiles, and
 #              using GNU stow to link configuration files to their appropriate
 #              locations. The script supports both home and work environments
 #              and can optionally skip Homebrew setup to only stow configs.
@@ -49,16 +49,17 @@ if [[ "${1-}" == "--stow-only" ]]; then
   echo "Running in stow-only mode. Skipping Homebrew setup."
   stow_configs
   copy_karabiner_config
+  setup_amp_config
   stow_secret_configs || true
   install_tmux_plugin_manager
   convert_git_remote_to_ssh
 else
-  # Normal full bootstrap process
   request_sudo_privileges
   install_homebrew
   install_homebrew_packages_and_apps
   stow_configs
   copy_karabiner_config
+  setup_amp_config
   stow_secret_configs || true
   install_tmux_plugin_manager
   convert_git_remote_to_ssh
