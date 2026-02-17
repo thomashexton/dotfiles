@@ -48,7 +48,9 @@ ensure_profile_choice
 if [[ "${1-}" == "--stow-only" ]]; then
   echo "Running in stow-only mode. Skipping Homebrew setup."
   stow_configs
+  copy_karabiner_config
   stow_secret_configs || true
+  install_tmux_plugin_manager
   convert_git_remote_to_ssh
 else
   # Normal full bootstrap process
@@ -56,7 +58,9 @@ else
   install_homebrew
   install_homebrew_packages_and_apps
   stow_configs
+  copy_karabiner_config
   stow_secret_configs || true
+  install_tmux_plugin_manager
   convert_git_remote_to_ssh
 fi
 

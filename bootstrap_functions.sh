@@ -150,11 +150,10 @@ function stow_configs() {
     editorconfig
     # fish
     gh
-    # ghostty
     git
-    karabiner
-    # skhd
+    # karabiner – managed separately; Karabiner writes atomically and breaks symlinks
     stow
+    tmux
     zed
     zim
     zsh
@@ -179,17 +178,10 @@ function stow_secret_configs() {
     zsh
   )
 
-  if is_work_machine; then
-    packages+=(git_work)
-    echo "Work profile detected; including work git config."
-  else
-    echo "Home profile detected; skipping work git config."
-  fi
-
   echo "Stowing secret packages: ${packages[*]}"
   stow -t "${HOME}" -d "${icloud_stow_path}" "${packages[@]}" --no-folding --ignore='.*\.DS_Store'
   echo "Secret configs stowed."
-  
+
   # Handle SSH config Include for work/personal config coexistence
   setup_ssh_config_include
 }
@@ -198,13 +190,13 @@ function stow_secret_configs() {
 function setup_ssh_config_include() {
   local ssh_config="${HOME}/.ssh/config"
   local personal_dir="${HOME}/.ssh/personal"
-  
+
   # Only proceed if personal directory exists (was stowed successfully)
   if [[ ! -d "${personal_dir}" ]]; then
     echo "Personal SSH directory not found, skipping Include setup."
     return 0
   fi
-  
+
   # Check if ~/.ssh/config exists
   if [[ ! -f "${ssh_config}" ]]; then
     # If config doesn't exist, create it with the Include block
@@ -215,19 +207,19 @@ function setup_ssh_config_include() {
     printf '## -- END PERSONAL -- ##\n' >> "${ssh_config}"
     return 0
   fi
-  
+
   # Check if personal block already exists
   if grep -q "## -- START PERSONAL -- ##" "${ssh_config}"; then
     echo "SSH config already includes personal config."
     return 0
   fi
-  
+
   # Append Include block after any existing roo config blocks
   echo "Adding personal config Include to ~/.ssh/config..."
-  
+
   # Create a temporary file with the new content
   local temp_config=$(mktemp)
-  
+
   if grep -q "## -- END ROO -- ##" "${ssh_config}"; then
     # Insert after the roo block
     awk '/## -- END ROO -- ##/ {
@@ -248,8 +240,33 @@ function setup_ssh_config_include() {
     printf 'Include ~/.ssh/personal/*.conf\n' >> "${ssh_config}"
     printf '## -- END PERSONAL -- ##\n' >> "${ssh_config}"
   fi
-  
+
   echo "SSH config Include setup complete."
+}
+
+
+function copy_karabiner_config() {
+  local src="${WORKDIR}/karabiner/.config/karabiner/karabiner.json"
+  local dest="${XDG_CONFIG_HOME}/karabiner/karabiner.json"
+
+  if [[ ! -f "${src}" ]]; then
+    echo "Karabiner source config not found. Skipping."
+    return 0
+  fi
+
+  mkdir -p "$(dirname "${dest}")"
+  cp "${src}" "${dest}"
+  echo "Karabiner config copied (not symlinked — Karabiner writes atomically)."
+}
+
+
+function install_tmux_plugin_manager() {
+  if [[ -d "${HOME}/.tmux/plugins/tpm" ]]; then
+    echo "TPM already installed."
+  else
+    echo "Installing TPM (Tmux Plugin Manager)..."
+    git clone https://github.com/tmux-plugins/tpm "${HOME}/.tmux/plugins/tpm"
+  fi
 }
 
 

@@ -13,7 +13,7 @@ function print_wattage {
 
 function reset_tracked_branches {
     # Set the remote branches to track
-    git remote set-branches origin master green 'thomashexton-*' 'jayt-*' 'bnguyen*' 'fahad*'
+    git remote set-branches origin master green 'thomashexton-*' 'jayt-*' 'regina*'
 
     # Fetch the updated branch references from the remote
     git fetch --prune

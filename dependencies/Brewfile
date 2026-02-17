@@ -13,6 +13,8 @@ brew "difftastic"
 brew "stow"
 # NeoVim, get on it
 brew "neovim"
+# Terminal multiplexer
+brew "tmux"
 
 
 ## Casks (GUI)
