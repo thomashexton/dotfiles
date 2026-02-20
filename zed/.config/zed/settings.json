@@ -8,17 +8,18 @@
 // from the command palette or from `Zed` application menu.
 {
   // THEME
+  "buffer_font_weight": 400.0,
   "agent_servers": {
     "claude": {
       "default_model": "us.anthropic.claude-opus-4-6-v1",
       "favorite_models": []
     }
   },
-  "theme": "macOS Classic Dark",
+  "theme": "Gruvbox Dark",
 
 
   // FONTS
-  "buffer_font_family": "MonoLisa Nerd Font",
+  "buffer_font_family": "JetBrains Mono",
   "buffer_font_features": {
     // Enable ligatures:
     "calt": true
@@ -26,7 +27,7 @@
   "buffer_line_height": "comfortable",
 
   // // 27" 2880p && 1440p
-  "buffer_font_size": 13,
+  "buffer_font_size": 14.0,
   "ui_font_size": 14, // ui font size
 
   // Assistant Chat

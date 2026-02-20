@@ -30,11 +30,3 @@
 [credential "https://gist.github.com"]
     helper =
     helper = !/opt/homebrew/bin/gh auth git-credential
-
-[maintenance]
-	repo = /Users/thomashexton/work/charcoal
-	repo = /Users/thomashexton/work/canva
-	repo = /Users/thomashexton/work/thomashexton-dotfiles
-
-[trace2]
-	eventtarget = af_unix:dgram:/tmp/olly-git-trace2.sock
