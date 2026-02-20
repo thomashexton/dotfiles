@@ -2,22 +2,23 @@
 TERM = "xterm-256color"
 
 [font]
-size = 14.0
+size = 15.0
 
+# family = "MonoLisa Nerd Font"
 [font.bold]
-family = "MonoLisa Nerd Font"
+family = "JetBrainsMono Nerd Font"
 style = "Bold"
 
 [font.bold_italic]
-family = "MonoLisa Nerd Font"
+family = "JetBrainsMono Nerd Font"
 style = "Bold Italic"
 
 [font.italic]
-family = "MonoLisa Nerd Font"
+family = "JetBrainsMono Nerd Font"
 style = "Regular Italic"
 
 [font.normal]
-family = "MonoLisa Nerd Font"
+family = "JetBrainsMono Nerd Font"
 style = "Regular"
 
 [window]
@@ -35,3 +36,67 @@ live_config_reload = true
 key = "Return"
 mods = "Shift"
 chars = "\u001b\r"
+
+# ─── tmux: Ctrl shortcuts → Ctrl+B prefix ───────────────────────────────────
+
+[[keyboard.bindings]]
+key = "T"
+mods = "Control"
+chars = "\u0002c"        # new window
+
+[[keyboard.bindings]]
+key = "W"
+mods = "Control"
+chars = "\u0002x"        # kill pane
+
+[[keyboard.bindings]]
+key = "K"
+mods = "Control"
+chars = "\u0002s"        # session picker
+
+# ─── tmux: Ctrl+1-9 → switch window ─────────────────────────────────────────
+
+[[keyboard.bindings]]
+key = "Key1"
+mods = "Control"
+chars = "\u00021"
+
+[[keyboard.bindings]]
+key = "Key2"
+mods = "Control"
+chars = "\u00022"
+
+[[keyboard.bindings]]
+key = "Key3"
+mods = "Control"
+chars = "\u00023"
+
+[[keyboard.bindings]]
+key = "Key4"
+mods = "Control"
+chars = "\u00024"
+
+[[keyboard.bindings]]
+key = "Key5"
+mods = "Control"
+chars = "\u00025"
+
+[[keyboard.bindings]]
+key = "Key6"
+mods = "Control"
+chars = "\u00026"
+
+[[keyboard.bindings]]
+key = "Key7"
+mods = "Control"
+chars = "\u00027"
+
+[[keyboard.bindings]]
+key = "Key8"
+mods = "Control"
+chars = "\u00028"
+
+[[keyboard.bindings]]
+key = "Key9"
+mods = "Control"
+chars = "\u00029"
