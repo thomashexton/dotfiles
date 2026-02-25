@@ -145,8 +145,11 @@ function install_homebrew_packages_and_apps() {
 
 function stow_configs() {
   local packages=(
+    amp
     aerospace
     alacritty
+    claude
+    codex
     editorconfig
     # fish
     gh
@@ -179,7 +182,9 @@ function stow_secret_configs() {
   )
 
   echo "Stowing secret packages: ${packages[*]}"
-  stow -t "${HOME}" -d "${icloud_stow_path}" "${packages[@]}" --no-folding --ignore='.*\.DS_Store'
+  stow -t "${HOME}" -d "${icloud_stow_path}" "${packages[@]}" --no-folding \
+    --ignore='.*\.DS_Store' \
+    --ignore='^/\.ssh/.*_include\.conf$'
   echo "Secret configs stowed."
 
   # Handle SSH config Include for work/personal config coexistence
@@ -190,6 +195,10 @@ function stow_secret_configs() {
 function setup_ssh_config_include() {
   local ssh_config="${HOME}/.ssh/config"
   local personal_dir="${HOME}/.ssh/personal"
+  local include_template="${HOME}/Library/Mobile Documents/com~apple~CloudDocs/stow/ssh/.ssh/personal_include.conf"
+  local include_dir="${HOME}/Library/Mobile Documents/com~apple~CloudDocs/stow/ssh/.ssh"
+  local begin_mark="## -- START THOMAS -- ##"
+  local end_mark="## -- END THOMAS -- ##"
 
   # Only proceed if personal directory exists (was stowed successfully)
   if [[ ! -d "${personal_dir}" ]]; then
@@ -201,45 +210,55 @@ function setup_ssh_config_include() {
   if [[ ! -f "${ssh_config}" ]]; then
     # If config doesn't exist, create it with the Include block
     echo "Creating ~/.ssh/config with Include directive..."
-    printf '## -- START PERSONAL -- ##\n' > "${ssh_config}"
-    printf '## DO NOT EDIT: Added by the personal dotfiles script\n' >> "${ssh_config}"
-    printf 'Include ~/.ssh/personal/*.conf\n' >> "${ssh_config}"
-    printf '## -- END PERSONAL -- ##\n' >> "${ssh_config}"
+    {
+      printf '%s\n' "${begin_mark}"
+      if compgen -G "${include_dir}/*_include.conf" > /dev/null; then
+        cat "${include_dir}"/*_include.conf
+      else
+        printf 'Include ~/.ssh/personal/*.conf\n'
+      fi
+      printf '%s\n' "${end_mark}"
+    } > "${ssh_config}"
     return 0
   fi
 
   # Check if personal block already exists
-  if grep -q "## -- START PERSONAL -- ##" "${ssh_config}"; then
-    echo "SSH config already includes personal config."
+  if grep -q "${begin_mark}" "${ssh_config}"; then
+    echo "SSH config already includes dotfiles includes."
     return 0
   fi
 
-  # Append Include block after any existing roo config blocks
+  # Insert Include block at the top of the file
   echo "Adding personal config Include to ~/.ssh/config..."
 
   # Create a temporary file with the new content
   local temp_config=$(mktemp)
+  local temp_block=$(mktemp)
 
-  if grep -q "## -- END ROO -- ##" "${ssh_config}"; then
-    # Insert after the roo block
-    awk '/## -- END ROO -- ##/ {
-      print
-      print ""
-      print "## -- START PERSONAL -- ##"
-      print "## DO NOT EDIT: Added by the personal dotfiles script https://github.com/thomashexton/dotfiles#"
-      print "Include ~/.ssh/personal/*.conf"
-      print "## -- END PERSONAL -- ##"
-      next
-    }
-    { print }' "${ssh_config}" > "${temp_config}"
-    mv "${temp_config}" "${ssh_config}"
-  else
-    # Just append at the end
-    printf '\n## -- START PERSONAL -- ##\n' >> "${ssh_config}"
-    printf '## DO NOT EDIT: Added by the personal dotfiles script\n' >> "${ssh_config}"
-    printf 'Include ~/.ssh/personal/*.conf\n' >> "${ssh_config}"
-    printf '## -- END PERSONAL -- ##\n' >> "${ssh_config}"
-  fi
+  {
+    printf '%s\n' "${begin_mark}"
+    if compgen -G "${include_dir}/*_include.conf" > /dev/null; then
+      cat "${include_dir}"/*_include.conf
+    else
+      printf 'Include ~/.ssh/personal/*.conf\n'
+    fi
+    printf '%s\n' "${end_mark}"
+  } > "${temp_block}"
+
+  # Remove any legacy personal block or previous dotfiles block before inserting.
+  awk -v begin="${begin_mark}" -v end="${end_mark}" '
+    $0 == begin { in_block = 1; next }
+    $0 == end { in_block = 0; next }
+    $0 == "## -- START PERSONAL -- ##" { in_block = 1; next }
+    $0 == "## -- END PERSONAL -- ##" { in_block = 0; next }
+    !in_block { print }
+  ' "${ssh_config}" > "${temp_config}"
+
+  cat "${temp_block}" > "${ssh_config}"
+  printf '\n' >> "${ssh_config}"
+  cat "${temp_config}" >> "${ssh_config}"
+
+  rm -f "${temp_config}" "${temp_block}"
 
   echo "SSH config Include setup complete."
 }
@@ -278,6 +297,17 @@ function setup_claude_config() {
     bash "${script}"
   else
     echo "Claude setup script not found. Skipping."
+  fi
+}
+
+
+function setup_codex_config() {
+  local script="${WORKDIR}/codex/setup-codex.sh"
+  if [[ -f "${script}" ]]; then
+    echo "Merging Codex CLI settings overrides..."
+    bash "${script}"
+  else
+    echo "Codex setup script not found. Skipping."
   fi
 }
 

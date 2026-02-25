@@ -30,7 +30,7 @@ cask "karabiner-elements"
 # cask "roon"
 cask "zed"
 # Software KVM - share mouse/keyboard with hxtn (NixOS desktop)
-brew "deskflow"
+cask "deskflow"
 
 ## Fonts
 cask "font-hack-nerd-font"
