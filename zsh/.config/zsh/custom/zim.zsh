@@ -128,5 +128,7 @@ unset key
 
 # Free 'gt*' for work CLI tools
 unalias gt gtl gts gtv gtx 2>/dev/null
+# Free 'gh*' for GitHub's own CLI tool
+unalias gh ghw 2>/dev/null
 
 # }}} End configuration added by Zim install
