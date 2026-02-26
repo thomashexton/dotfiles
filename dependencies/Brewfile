@@ -1,5 +1,6 @@
 # tap "koekeishiya/formulae" # skhd
 tap "nikitabobko/tap"
+tap "deskflow/tap"
 
 
 ## CLI
@@ -28,6 +29,8 @@ cask "karabiner-elements"
 # cask "rectangle-pro"
 # cask "roon"
 cask "zed"
+# Software KVM - share mouse/keyboard with hxtn (NixOS desktop)
+cask "deskflow"
 
 ## Fonts
 cask "font-hack-nerd-font"

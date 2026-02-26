@@ -1,0 +1,5 @@
+# Ignore setup script - should only be run via install.sh
+^/setup-amp\.sh$
+
+# Ignore settings overrides - merged by setup-amp.sh instead
+^/\.config/amp/settings\.overrides\.json$

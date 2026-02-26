@@ -1,0 +1,5 @@
+# Ignore setup script - should only be run via install.sh
+^/setup-codex\.sh$
+
+# Ignore config overrides - merged by setup-codex.sh instead
+^/\.codex/config\.overrides\.toml$

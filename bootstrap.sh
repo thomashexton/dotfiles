@@ -51,6 +51,7 @@ if [[ "${1-}" == "--stow-only" ]]; then
   copy_karabiner_config
   setup_amp_config
   setup_claude_config
+  setup_codex_config
   stow_secret_configs || true
   install_tmux_plugin_manager
   convert_git_remote_to_ssh
@@ -62,6 +63,7 @@ else
   copy_karabiner_config
   setup_amp_config
   setup_claude_config
+  setup_codex_config
   stow_secret_configs || true
   install_tmux_plugin_manager
   convert_git_remote_to_ssh

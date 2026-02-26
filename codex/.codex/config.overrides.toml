@@ -1,0 +1,8 @@
+# Codex defaults managed by dotfiles setup.
+# Keep sandbox as workspace-write, but allow network in that sandbox.
+
+sandbox_mode = "workspace-write"
+approval_policy = "on-request"
+
+[sandbox_workspace_write]
+network_access = true
