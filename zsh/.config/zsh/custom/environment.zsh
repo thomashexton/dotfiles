@@ -1,4 +1,5 @@
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
 
 export ZSHZ_DATA="${XDG_CACHE_HOME}/.z"
 

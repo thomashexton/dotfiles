@@ -14,6 +14,14 @@ brew "difftastic"
 brew "stow"
 # NeoVim, get on it
 brew "neovim"
+# Git TUI used by LazyVim
+brew "lazygit"
+# CLI used by nvim-treesitter for custom parsers
+brew "tree-sitter-cli"
+# Fuzzy finder used by fzf-lua in LazyVim
+brew "fzf"
+# Fast file finder used by fzf-lua in LazyVim
+brew "fd"
 # Terminal multiplexer
 brew "tmux"
 
