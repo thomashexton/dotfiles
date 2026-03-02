@@ -2,5 +2,11 @@
   "attribution": {
     "commit": "",
     "pr": ""
+  },
+  "mcpServers": {
+    "obsidian": {
+      "command": "npx",
+      "args": ["@mauricio.wolff/mcp-obsidian@latest", "/Users/thomashexton/second-brain"]
+    }
   }
 }
