@@ -19,3 +19,7 @@ if [[ -f "$SETTINGS" ]]; then
 else
   cp "$OVERRIDES" "$SETTINGS"
 fi
+
+# Register obsidian MCP at user scope (works with claude mcp list / Claude Code CLI)
+claude mcp remove obsidian --scope user 2>/dev/null || true
+claude mcp add --scope user obsidian -- npx @mauricio.wolff/mcp-obsidian@latest "$HOME/second-brain"
