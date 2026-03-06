@@ -1,0 +1,26 @@
+# ─── appearance ──────────────────────────────────────────────────────────────
+window-decoration = false
+font-family = JetBrainsMono Nerd Font
+font-size = 15
+
+# ─── tmux: Shift+Enter → send ESC + CR ──────────────────────────────────────
+keybind = shift+enter=text:\x1b\r
+
+# ─── tmux: Ctrl shortcuts → Ctrl+B prefix ───────────────────────────────────
+keybind = ctrl+t=text:\x02c
+keybind = ctrl+w=text:\x02x
+keybind = ctrl+k=text:\x02s
+
+# ─── tmux: Cmd+F → copy mode + search ───────────────────────────────────────
+keybind = cmd+f=text:\x02[/
+
+# ─── tmux: Ctrl+1-9 → switch window ─────────────────────────────────────────
+keybind = ctrl+1=text:\x021
+keybind = ctrl+2=text:\x022
+keybind = ctrl+3=text:\x023
+keybind = ctrl+4=text:\x024
+keybind = ctrl+5=text:\x025
+keybind = ctrl+6=text:\x026
+keybind = ctrl+7=text:\x027
+keybind = ctrl+8=text:\x028
+keybind = ctrl+9=text:\x029
