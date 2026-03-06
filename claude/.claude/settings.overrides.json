@@ -1,8 +1,14 @@
 {
+  "allowedTools": [
+    "mcp__obsidian__*"
+  ],
   "attribution": {
     "commit": "",
     "pr": ""
   },
+  "deniedTools": [
+    "mcp__obsidian__delete_note"
+  ],
   "statusLine": {
     "type": "command",
     "command": "bash ~/.claude/statusline-command.sh"
