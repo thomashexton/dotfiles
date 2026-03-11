@@ -12,12 +12,19 @@ if [[ ! -f "$OVERRIDES" ]]; then
   return 0 2>/dev/null || exit 0
 fi
 
+mkdir -p "$HOME/.claude"
+
 if [[ -f "$SETTINGS" ]]; then
   # Merge: overrides win over existing settings
   tmp=$(mktemp)
   jq -s '.[0] * .[1]' "$SETTINGS" "$OVERRIDES" > "$tmp" && mv "$tmp" "$SETTINGS"
 else
   cp "$OVERRIDES" "$SETTINGS"
+fi
+
+if ! command -v claude >/dev/null 2>&1; then
+  echo "Claude CLI not found; skipping MCP registration."
+  exit 0
 fi
 
 # Register obsidian MCP at user scope (works with claude mcp list / Claude Code CLI)

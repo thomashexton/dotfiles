@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+KANATA_BIN="${KANATA_BIN:-/opt/homebrew/bin/kanata}"
+KANATA_CONFIG="${KANATA_CONFIG:-${XDG_CONFIG_HOME:-$HOME/.config}/kanata/kanata.kbd}"
+
+if [[ ! -x "${KANATA_BIN}" ]]; then
+  echo "kanata binary not found at ${KANATA_BIN}" >&2
+  exit 1
+fi
+
+if [[ ! -f "${KANATA_CONFIG}" ]]; then
+  echo "kanata config not found at ${KANATA_CONFIG}" >&2
+  exit 1
+fi
+
+exec "${KANATA_BIN}" --check --cfg "${KANATA_CONFIG}"

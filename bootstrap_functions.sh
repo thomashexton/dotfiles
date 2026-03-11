@@ -154,7 +154,7 @@ function stow_configs() {
     # fish
     gh
     git
-    # karabiner – managed separately; Karabiner writes atomically and breaks symlinks
+    kanata
     stow
     tmux
     zed
@@ -170,9 +170,22 @@ function stow_configs() {
 
 function stow_secret_configs() {
   local icloud_stow_path="${HOME}/Library/Mobile Documents/com~apple~CloudDocs/stow"
+  local profile_choice
+  profile_choice=$(current_profile)
 
   if [ ! -d "${icloud_stow_path}" ]; then
     echo "Error: iCloud Drive stow directory not found at ${icloud_stow_path}. Aborting."
+    return 1
+  fi
+
+  if [[ -z "${profile_choice}" ]]; then
+    echo "Error: no profile selected. Run ensure_profile_choice first." >&2
+    return 1
+  fi
+
+  local profile_stow_path="${icloud_stow_path}/${profile_choice}"
+  if [ ! -d "${profile_stow_path}" ]; then
+    echo "Error: profile-scoped iCloud Drive stow directory not found at ${profile_stow_path}."
     return 1
   fi
 
@@ -180,102 +193,88 @@ function stow_secret_configs() {
     ssh
     zsh
   )
+  local existing_packages=()
 
-  echo "Stowing secret packages: ${packages[*]}"
-  stow -t "${HOME}" -d "${icloud_stow_path}" "${packages[@]}" --no-folding \
-    --ignore='.*\.DS_Store' \
-    --ignore='^/\.ssh/.*_include\.conf$'
-  echo "Secret configs stowed."
+  for package in "${packages[@]}"; do
+    if [[ -d "${profile_stow_path}/${package}" ]]; then
+      existing_packages+=("${package}")
+    fi
+  done
+
+  if [[ ${#existing_packages[@]} -eq 0 ]]; then
+    echo "No secret packages found for profile '${profile_choice}' in ${profile_stow_path}."
+  else
+    echo "Stowing secret packages for profile '${profile_choice}': ${existing_packages[*]}"
+    if ! stow -t "${HOME}" -d "${profile_stow_path}" "${existing_packages[@]}" --no-folding \
+      --ignore='.*\.DS_Store' \
+      --ignore='.*_include\.conf$'; then
+      echo "Error: stowing secret packages failed for profile '${profile_choice}'." >&2
+      return 1
+    fi
+    echo "Secret configs stowed."
+  fi
 
   # Handle SSH config Include for work/personal config coexistence
-  setup_ssh_config_include
+  setup_ssh_config_include "${profile_stow_path}"
 }
 
 
 function setup_ssh_config_include() {
+  local profile_stow_path="${1:?profile stow path required}"
   local ssh_config="${HOME}/.ssh/config"
-  local personal_dir="${HOME}/.ssh/personal"
-  local include_template="${HOME}/Library/Mobile Documents/com~apple~CloudDocs/stow/ssh/.ssh/personal_include.conf"
-  local include_dir="${HOME}/Library/Mobile Documents/com~apple~CloudDocs/stow/ssh/.ssh"
+  local include_dir="${profile_stow_path}/ssh/.ssh"
   local begin_mark="## -- START THOMAS -- ##"
   local end_mark="## -- END THOMAS -- ##"
+  local temp_config
+  temp_config=$(mktemp)
+  local temp_block
+  temp_block=$(mktemp)
+  local include_files=()
+  local include_file
 
-  # Only proceed if personal directory exists (was stowed successfully)
-  if [[ ! -d "${personal_dir}" ]]; then
-    echo "Personal SSH directory not found, skipping Include setup."
-    return 0
+  if [[ -d "${include_dir}" ]]; then
+    while IFS= read -r include_file; do
+      include_files+=("${include_file}")
+    done < <(find "${include_dir}" -maxdepth 1 -type f -name '*_include.conf' | sort)
   fi
 
-  # Check if ~/.ssh/config exists
-  if [[ ! -f "${ssh_config}" ]]; then
-    # If config doesn't exist, create it with the Include block
-    echo "Creating ~/.ssh/config with Include directive..."
-    {
-      printf '%s\n' "${begin_mark}"
-      if compgen -G "${include_dir}/*_include.conf" > /dev/null; then
-        cat "${include_dir}"/*_include.conf
-      else
-        printf 'Include ~/.ssh/personal/*.conf\n'
-      fi
-      printf '%s\n' "${end_mark}"
-    } > "${ssh_config}"
-    return 0
+  if [[ -f "${ssh_config}" ]]; then
+    # Remove any legacy personal block or previous dotfiles block before inserting.
+    awk -v begin="${begin_mark}" -v end="${end_mark}" '
+      $0 == begin { in_block = 1; next }
+      $0 == end { in_block = 0; next }
+      $0 == "## -- START PERSONAL -- ##" { in_block = 1; next }
+      $0 == "## -- END PERSONAL -- ##" { in_block = 0; next }
+      !in_block { print }
+    ' "${ssh_config}" > "${temp_config}"
+  else
+    : > "${temp_config}"
   fi
 
-  # Check if personal block already exists
-  if grep -q "${begin_mark}" "${ssh_config}"; then
-    echo "SSH config already includes dotfiles includes."
+  if [[ ${#include_files[@]} -eq 0 ]]; then
+    cat "${temp_config}" > "${ssh_config}"
+    rm -f "${temp_config}" "${temp_block}"
+    echo "No SSH include snippets found in ${include_dir}; managed SSH include block removed."
     return 0
   fi
-
-  # Insert Include block at the top of the file
-  echo "Adding personal config Include to ~/.ssh/config..."
-
-  # Create a temporary file with the new content
-  local temp_config=$(mktemp)
-  local temp_block=$(mktemp)
 
   {
     printf '%s\n' "${begin_mark}"
-    if compgen -G "${include_dir}/*_include.conf" > /dev/null; then
-      cat "${include_dir}"/*_include.conf
-    else
-      printf 'Include ~/.ssh/personal/*.conf\n'
-    fi
+    for include_file in "${include_files[@]}"; do
+      cat "${include_file}"
+    done
     printf '%s\n' "${end_mark}"
   } > "${temp_block}"
 
-  # Remove any legacy personal block or previous dotfiles block before inserting.
-  awk -v begin="${begin_mark}" -v end="${end_mark}" '
-    $0 == begin { in_block = 1; next }
-    $0 == end { in_block = 0; next }
-    $0 == "## -- START PERSONAL -- ##" { in_block = 1; next }
-    $0 == "## -- END PERSONAL -- ##" { in_block = 0; next }
-    !in_block { print }
-  ' "${ssh_config}" > "${temp_config}"
-
   cat "${temp_block}" > "${ssh_config}"
-  printf '\n' >> "${ssh_config}"
-  cat "${temp_config}" >> "${ssh_config}"
+  if [[ -s "${temp_config}" ]]; then
+    printf '\n' >> "${ssh_config}"
+    cat "${temp_config}" >> "${ssh_config}"
+  fi
 
   rm -f "${temp_config}" "${temp_block}"
 
-  echo "SSH config Include setup complete."
-}
-
-
-function copy_karabiner_config() {
-  local src="${WORKDIR}/karabiner/.config/karabiner/karabiner.json"
-  local dest="${XDG_CONFIG_HOME}/karabiner/karabiner.json"
-
-  if [[ ! -f "${src}" ]]; then
-    echo "Karabiner source config not found. Skipping."
-    return 0
-  fi
-
-  mkdir -p "$(dirname "${dest}")"
-  cp "${src}" "${dest}"
-  echo "Karabiner config copied (not symlinked — Karabiner writes atomically)."
+  echo "SSH config include block updated from ${include_dir}."
 }
 
 
@@ -309,6 +308,78 @@ function setup_codex_config() {
   else
     echo "Codex setup script not found. Skipping."
   fi
+}
+
+
+function setup_kanata() {
+  local config_path="${XDG_CONFIG_HOME}/kanata/kanata.kbd"
+  local driver_app="/Library/Application Support/org.pqrs/Karabiner-DriverKit-VirtualHIDDevice/Applications/Karabiner-VirtualHIDDevice-Daemon.app"
+  local kanata_bin
+  kanata_bin=$(command -v kanata || true)
+
+  if [[ ! -f "${config_path}" ]]; then
+    echo "kanata config not found at ${config_path}. Skipping."
+    return 0
+  fi
+
+  if [[ -z "${kanata_bin}" ]]; then
+    echo "kanata is not installed yet. Skipping launch daemon setup."
+    return 0
+  fi
+
+  if [[ ! -d "${driver_app}" ]]; then
+    echo "Karabiner VirtualHID driver is not installed. Install karabiner-elements first."
+    return 0
+  fi
+
+  if ! sudo -n true >/dev/null 2>&1; then
+    echo "kanata config is stowed, but sudo is unavailable so launch daemon setup was skipped."
+    echo "Run this manually once sudo is available:"
+    echo "  sudo \"${kanata_bin}\" --cfg \"${config_path}\""
+    return 0
+  fi
+
+  local label="com.thomashexton.kanata"
+  local plist_path="/Library/LaunchDaemons/${label}.plist"
+  local stdout_path="${XDG_CACHE_HOME}/kanata.stdout.log"
+  local stderr_path="${XDG_CACHE_HOME}/kanata.stderr.log"
+
+  echo "Installing kanata launch daemon..."
+
+  sudo tee "${plist_path}" >/dev/null <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>${label}</string>
+    <key>KeepAlive</key>
+    <true/>
+    <key>ProgramArguments</key>
+    <array>
+      <string>${kanata_bin}</string>
+      <string>--cfg</string>
+      <string>${config_path}</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>StandardErrorPath</key>
+    <string>${stderr_path}</string>
+    <key>StandardOutPath</key>
+    <string>${stdout_path}</string>
+    <key>WorkingDirectory</key>
+    <string>${HOME}</string>
+  </dict>
+</plist>
+EOF
+
+  sudo chown root:wheel "${plist_path}"
+  sudo chmod 644 "${plist_path}"
+  sudo launchctl bootout "system/${label}" >/dev/null 2>&1 || true
+  sudo launchctl bootstrap system "${plist_path}"
+  sudo launchctl enable "system/${label}"
+  sudo launchctl kickstart -k "system/${label}"
+  echo "kanata launch daemon installed."
 }
 
 
