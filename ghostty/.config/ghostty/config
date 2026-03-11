@@ -1,5 +1,8 @@
 # ─── appearance ──────────────────────────────────────────────────────────────
-window-decoration = false
+macos-titlebar-style = hidden
+window-padding-x = 10
+window-padding-y = 10
+keybind = cmd+shift+r=reload_config
 font-family = JetBrainsMono Nerd Font
 font-size = 15
 
