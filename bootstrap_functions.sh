@@ -183,46 +183,55 @@ function stow_secret_configs() {
     return 1
   fi
 
-  local profile_stow_path="${icloud_stow_path}/${profile_choice}"
-  if [ ! -d "${profile_stow_path}" ]; then
-    echo "Error: profile-scoped iCloud Drive stow directory not found at ${profile_stow_path}."
-    return 1
+  # home/ is always stowed (personal baseline); work/ is stowed on top for work machines
+  local stow_dirs=("${icloud_stow_path}/home")
+  if [[ "${profile_choice}" == "work" ]]; then
+    stow_dirs+=("${icloud_stow_path}/work")
   fi
 
-  local packages=(
-    ssh
-    zsh
-  )
-  local existing_packages=()
+  local packages=(ssh zsh)
+  local ssh_include_dirs=()
 
-  for package in "${packages[@]}"; do
-    if [[ -d "${profile_stow_path}/${package}" ]]; then
-      existing_packages+=("${package}")
+  for stow_dir in "${stow_dirs[@]}"; do
+    if [ ! -d "${stow_dir}" ]; then
+      echo "Warning: stow directory not found at ${stow_dir}. Skipping."
+      continue
+    fi
+
+    local existing_packages=()
+    for package in "${packages[@]}"; do
+      if [[ -d "${stow_dir}/${package}" ]]; then
+        existing_packages+=("${package}")
+      fi
+    done
+
+    if [[ ${#existing_packages[@]} -eq 0 ]]; then
+      echo "No secret packages found in ${stow_dir}."
+    else
+      echo "Stowing secret packages from ${stow_dir}: ${existing_packages[*]}"
+      if ! stow -t "${HOME}" -d "${stow_dir}" "${existing_packages[@]}" --no-folding \
+        --ignore='.*\.DS_Store' \
+        --ignore='.*_include\.conf$'; then
+        echo "Error: stowing secret packages failed from ${stow_dir}." >&2
+        return 1
+      fi
+    fi
+
+    if [[ -d "${stow_dir}/ssh/.ssh" ]]; then
+      ssh_include_dirs+=("${stow_dir}/ssh/.ssh")
     fi
   done
 
-  if [[ ${#existing_packages[@]} -eq 0 ]]; then
-    echo "No secret packages found for profile '${profile_choice}' in ${profile_stow_path}."
-  else
-    echo "Stowing secret packages for profile '${profile_choice}': ${existing_packages[*]}"
-    if ! stow -t "${HOME}" -d "${profile_stow_path}" "${existing_packages[@]}" --no-folding \
-      --ignore='.*\.DS_Store' \
-      --ignore='.*_include\.conf$'; then
-      echo "Error: stowing secret packages failed for profile '${profile_choice}'." >&2
-      return 1
-    fi
-    echo "Secret configs stowed."
-  fi
+  echo "Secret configs stowed."
 
-  # Handle SSH config Include for work/personal config coexistence
-  setup_ssh_config_include "${profile_stow_path}"
+  # Handle SSH config Include — collect include dirs from all stowed ssh packages
+  setup_ssh_config_include "${ssh_include_dirs[@]}"
 }
 
 
 function setup_ssh_config_include() {
-  local profile_stow_path="${1:?profile stow path required}"
+  local include_dirs=("$@")
   local ssh_config="${HOME}/.ssh/config"
-  local include_dir="${profile_stow_path}/ssh/.ssh"
   local begin_mark="## -- START THOMAS -- ##"
   local end_mark="## -- END THOMAS -- ##"
   local temp_config
@@ -232,11 +241,13 @@ function setup_ssh_config_include() {
   local include_files=()
   local include_file
 
-  if [[ -d "${include_dir}" ]]; then
-    while IFS= read -r include_file; do
-      include_files+=("${include_file}")
-    done < <(find "${include_dir}" -maxdepth 1 -type f -name '*_include.conf' | sort)
-  fi
+  for include_dir in "${include_dirs[@]}"; do
+    if [[ -d "${include_dir}" ]]; then
+      while IFS= read -r include_file; do
+        include_files+=("${include_file}")
+      done < <(find "${include_dir}" -maxdepth 1 -type f -name '*_include.conf' | sort)
+    fi
+  done
 
   if [[ -f "${ssh_config}" ]]; then
     # Remove any legacy personal block or previous dotfiles block before inserting.
@@ -254,7 +265,7 @@ function setup_ssh_config_include() {
   if [[ ${#include_files[@]} -eq 0 ]]; then
     cat "${temp_config}" > "${ssh_config}"
     rm -f "${temp_config}" "${temp_block}"
-    echo "No SSH include snippets found in ${include_dir}; managed SSH include block removed."
+    echo "No SSH include snippets found; managed SSH include block removed."
     return 0
   fi
 
@@ -380,6 +391,11 @@ EOF
   sudo launchctl enable "system/${label}"
   sudo launchctl kickstart -k "system/${label}"
   echo "kanata launch daemon installed."
+  echo ""
+  echo "ACTION REQUIRED: Grant Input Monitoring permission to kanata:"
+  echo "  1. Open System Settings → Privacy & Security → Input Monitoring"
+  echo "  2. Add: ${kanata_bin}"
+  echo "  3. Then restart the daemon: sudo launchctl kickstart -k system/${label}"
 }
 
 
