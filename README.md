@@ -67,17 +67,15 @@ correct set for the machine:
 
 ```text
 ~/Library/Mobile Documents/com~apple~CloudDocs/stow/
-  home/
+  home/                        ← always stowed on every machine
     ssh/
       .ssh/
-        personal/
+        personal/              ← personal SSH keys
         personal_include.conf
-  work/
+  work/                        ← stowed on top for work machines
     ssh/
       .ssh/
-        personal/
-        personal_include.conf
-        work/
+        work/                  ← work SSH keys
         work_include.conf
     zsh/
       .config/zsh/custom/
