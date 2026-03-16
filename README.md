@@ -2,12 +2,6 @@
 
 My personal dotfiles for macOS on Apple Silicon.
 
-## Quick Options
-
-- Full setup: `./bootstrap.sh`
-- Stow only (skip Homebrew): `./bootstrap.sh --stow-only`
-- Work machine secrets: `WORK=true ./bootstrap.sh`
-- Reset stored profile: `rm -f ~/.config/dotfiles-bootstrap/profile`
 
 ## Notes
 
