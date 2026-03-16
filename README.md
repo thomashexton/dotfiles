@@ -35,8 +35,7 @@ To set up your environment with these dotfiles, execute the following commands:
 
 ```sh
 git clone https://github.com/thomashexton/dotfiles.git ~/dotfiles
-cd ~/dotfiles  # Important: The bootstrap script needs to run from the dotfiles directory
-./bootstrap.sh
+~/dotfiles/bootstrap.sh
 ```
 
 The bootstrap script will:

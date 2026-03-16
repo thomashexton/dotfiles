@@ -1,4 +1,4 @@
-WORKDIR=$(pwd)
+WORKDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DOTFILES_STATE_DIR="${XDG_CONFIG_HOME:-${HOME}/.config}/dotfiles-bootstrap"
 DOTFILES_PROFILE_FILE="${DOTFILES_STATE_DIR}/profile"
 mkdir -p "${DOTFILES_STATE_DIR}"
