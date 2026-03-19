@@ -6,8 +6,8 @@ set -euo pipefail
 
 SETTINGS="$HOME/.codex/config.toml"
 OVERRIDES="$(dirname "$0")/.codex/config.overrides.toml"
-BEGIN_MARK="# BEGIN DOTFILES CODEX OVERRIDES"
-END_MARK="# END DOTFILES CODEX OVERRIDES"
+BEGIN_MARK="# BEGIN THOMAS DOTFILES CODEX OVERRIDES"
+END_MARK="# END THOMAS DOTFILES CODEX OVERRIDES"
 
 if [[ ! -f "$OVERRIDES" ]]; then
   return 0 2>/dev/null || exit 0

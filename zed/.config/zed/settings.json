@@ -10,9 +10,9 @@
   // THEME
   "buffer_font_weight": 400.0,
   "agent_servers": {
-    "claude": {
-      "default_model": "us.anthropic.claude-opus-4-6-v1",
-      "favorite_models": []
+    "claude-acp": {
+      "type": "registry",
+      "default_model": "us.anthropic.claude-opus-4-6-v1"
     }
   },
   "theme": "Gruvbox Dark",
