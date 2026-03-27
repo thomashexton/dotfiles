@@ -5,14 +5,19 @@
 
 set -euo pipefail
 
-SETTINGS="$HOME/.claude/settings.json"
-OVERRIDES="$(dirname "$0")/.claude/settings.overrides.json"
+if [[ "$(uname)" == "Darwin" ]]; then
+  SETTINGS="$HOME/Library/Application Support/Otter/claude-code-user/settings.json"
+else
+  SETTINGS="${XDG_CONFIG_HOME:-$HOME/.config}/otter/claude-code-user/settings.json"
+fi
+OVERRIDES="$(cd "$(dirname "$0")" && pwd)/.claude/settings.overrides.json"
 
 if [[ ! -f "$OVERRIDES" ]]; then
   return 0 2>/dev/null || exit 0
 fi
 
 mkdir -p "$HOME/.claude"
+mkdir -p "$(dirname "$SETTINGS")"
 
 if [[ -f "$SETTINGS" ]]; then
   # Merge: overrides win over existing settings

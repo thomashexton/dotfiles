@@ -1,5 +1,6 @@
 # Ignore setup script - should only be run via install.sh
 ^/setup-claude\.sh$
 
-# Ignore settings.overrides.json - merged by setup-claude.sh instead
+# Ignore settings.overrides.json - merged by setup-claude.sh, not read directly by Claude Code
 ^/\.claude/settings\.overrides\.json$
+
