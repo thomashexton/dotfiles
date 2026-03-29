@@ -1,6 +1,13 @@
 ;; Repo-managed kanata config for macOS.
 ;; Karabiner remains installed only to provide the VirtualHID driver.
 
+(defcfg
+  macos-dev-names-include (
+    "0xD4359520DA829EC8"  ;; Apple Internal Keyboard / Trackpad
+    "0x332291CC636E3094"  ;; Logitech MX Keys (USB Receiver)
+  )
+)
+
 ;; caps lock: tap = esc, hold = ctrl
 (defalias
   cap (tap-hold-press 120 120 esc lctl)
