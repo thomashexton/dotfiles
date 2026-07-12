@@ -114,10 +114,6 @@ source ${ZIM_HOME}/init.zsh
 # Post-init module configuration
 # ------------------------------
 
-#
-# zsh-history-substring-search
-#
-
 zmodload -F zsh/terminfo +p:terminfo
 # Bind ^[[A/^[[B manually so up/down works both before and after zle-line-init
 for key ('^[[A' '^P' ${terminfo[kcuu1]}) bindkey ${key} history-substring-search-up

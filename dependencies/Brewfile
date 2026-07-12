@@ -22,8 +22,6 @@ brew "tree-sitter-cli"
 brew "fzf"
 # Fast file finder used by fzf-lua in LazyVim
 brew "fd"
-# Software keyboard remapper; config lives in dotfiles
-brew "kanata"
 # Terminal multiplexer
 brew "tmux"
 
@@ -34,7 +32,6 @@ cask "alacritty"
 cask "appcleaner"
 # cask "ghostty"
 # cask "kap"
-# Driver dependency for kanata on macOS
 cask "karabiner-elements"
 # cask "monitorcontrol"
 # cask "rectangle-pro"

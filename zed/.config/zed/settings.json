@@ -8,6 +8,11 @@
 // from the command palette or from `Zed` application menu.
 {
   // THEME
+  "ui_font_family": ".ZedSans",
+  "ui_font_weight": 400.0,
+  "git_panel": {
+    "dock": "left"
+  },
   "buffer_font_weight": 400.0,
   "agent_servers": {
     "claude-acp": {
@@ -24,14 +29,15 @@
     // Enable ligatures:
     "calt": true
   },
-  "buffer_line_height": "comfortable",
+  "buffer_line_height": "standard",
 
   // // 27" 2880p && 1440p
-  "buffer_font_size": 14.0,
-  "ui_font_size": 14, // ui font size
+  "buffer_font_size": 12.0,
+  "ui_font_size": 14.0, // ui font size
 
   // Assistant Chat
   "agent": {
+    "dock": "right",
     "default_model": {
       "provider": "copilot_chat",
       "model": "gpt-4.1"
@@ -47,12 +53,14 @@
     // "default_width": 960, // 4k monitor opt 2
     // "default_width": 640, // 5k monitor
     // "default_width": 850, // 2k monitor w/ left/right
+    "dock": "left",
     "default_width": 425, // 2k monitor w/ left/right
     // Amount of indentation for nested items.
     "indent_size": 24
   },
   "collaboration_panel": {
     // Whether to show the collaboration panel button in the status bar.
+    "dock": "left",
     "button": false
   },
   "notification_panel": {
@@ -72,6 +80,7 @@
   "outline_panel": {
       // "default_width": 960, // 4k monitor opt 2
       // "default_width": 853, // 2k monitor
+      "dock": "left",
       "default_width": 540 // 2k monitor w/ left/right
     },
 

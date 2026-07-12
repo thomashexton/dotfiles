@@ -51,7 +51,6 @@ if [[ "${1-}" == "--stow-only" ]]; then
   setup_amp_config
   setup_claude_config
   setup_codex_config
-  setup_kanata
   stow_secret_configs || true
   install_tmux_plugin_manager
   convert_git_remote_to_ssh
@@ -63,7 +62,6 @@ else
   setup_amp_config
   setup_claude_config
   setup_codex_config
-  setup_kanata
   stow_secret_configs || true
   install_tmux_plugin_manager
   convert_git_remote_to_ssh

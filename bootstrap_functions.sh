@@ -154,7 +154,6 @@ function stow_configs() {
     # fish
     gh
     git
-    kanata
     stow
     tmux
     zed
@@ -322,81 +321,6 @@ function setup_codex_config() {
 }
 
 
-function setup_kanata() {
-  local config_path="${XDG_CONFIG_HOME}/kanata/kanata.kbd"
-  local driver_app="/Library/Application Support/org.pqrs/Karabiner-DriverKit-VirtualHIDDevice/Applications/Karabiner-VirtualHIDDevice-Daemon.app"
-  local kanata_bin
-  kanata_bin=$(command -v kanata || true)
-
-  if [[ ! -f "${config_path}" ]]; then
-    echo "kanata config not found at ${config_path}. Skipping."
-    return 0
-  fi
-
-  if [[ -z "${kanata_bin}" ]]; then
-    echo "kanata is not installed yet. Skipping launch daemon setup."
-    return 0
-  fi
-
-  if [[ ! -d "${driver_app}" ]]; then
-    echo "Karabiner VirtualHID driver is not installed. Install karabiner-elements first."
-    return 0
-  fi
-
-  if ! sudo -n true >/dev/null 2>&1; then
-    echo "kanata config is stowed, but sudo is unavailable so launch daemon setup was skipped."
-    echo "Run this manually once sudo is available:"
-    echo "  sudo \"${kanata_bin}\" --cfg \"${config_path}\""
-    return 0
-  fi
-
-  local label="com.thomashexton.kanata"
-  local plist_path="/Library/LaunchDaemons/${label}.plist"
-  local stdout_path="${XDG_CACHE_HOME}/kanata.stdout.log"
-  local stderr_path="${XDG_CACHE_HOME}/kanata.stderr.log"
-
-  echo "Installing kanata launch daemon..."
-
-  sudo tee "${plist_path}" >/dev/null <<EOF
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-  <dict>
-    <key>Label</key>
-    <string>${label}</string>
-    <key>KeepAlive</key>
-    <true/>
-    <key>ProgramArguments</key>
-    <array>
-      <string>${kanata_bin}</string>
-      <string>--cfg</string>
-      <string>${config_path}</string>
-    </array>
-    <key>RunAtLoad</key>
-    <true/>
-    <key>StandardErrorPath</key>
-    <string>${stderr_path}</string>
-    <key>StandardOutPath</key>
-    <string>${stdout_path}</string>
-    <key>WorkingDirectory</key>
-    <string>${HOME}</string>
-  </dict>
-</plist>
-EOF
-
-  sudo chown root:wheel "${plist_path}"
-  sudo chmod 644 "${plist_path}"
-  sudo launchctl bootout "system/${label}" >/dev/null 2>&1 || true
-  sudo launchctl bootstrap system "${plist_path}"
-  sudo launchctl enable "system/${label}"
-  sudo launchctl kickstart -k "system/${label}"
-  echo "kanata launch daemon installed."
-  echo ""
-  echo "ACTION REQUIRED: Grant Input Monitoring permission to kanata:"
-  echo "  1. Open System Settings → Privacy & Security → Input Monitoring"
-  echo "  2. Add: ${kanata_bin}"
-  echo "  3. Then restart the daemon: sudo launchctl kickstart -k system/${label}"
-}
 
 
 function install_tmux_plugin_manager() {

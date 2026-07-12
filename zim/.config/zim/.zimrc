@@ -1,22 +1,17 @@
-# Core functionality
+## Core functionality
 zmodule environment
 zmodule input
 zmodule utility
 zmodule git
 
-# Prompt dependencies and prompt
+## Prompt dependencies and prompt
 zmodule duration-info
-zmodule git-info
 zmodule asciiship
 
-# Completion
-#zmodule zsh-users/zsh-completions --fpath src
-#zmodule completion
-
-# Additional tools
+## Additional tools
 zmodule https://github.com/agkozak/zsh-z
 
-# Modules that must be initialized last
+## Modules that must be initialized last
 zmodule zsh-users/zsh-syntax-highlighting
 zmodule zsh-users/zsh-history-substring-search
 zmodule zsh-users/zsh-autosuggestions
